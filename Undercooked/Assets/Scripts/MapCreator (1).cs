@@ -17,6 +17,7 @@ public class MapCreator : MonoBehaviour
             {1,0,0,1},
             {1,2,2,1}
         };
+        walkableTileIndices = new List<int>() { 0 };
         playerStartPositions = new (int,int)[2] {
             (1,1),
             (1,2)
@@ -53,13 +54,20 @@ public class MapCreator : MonoBehaviour
         for (int i = 0; i < playerStartPositions.Length; i++)
         {
             (int x, int z) = playerStartPositions[i];
-            Vector3 position = new Vector3(x, 0.5f, z); // Y = 0.5f pre hráča nad dlaždicou
-            GameObject player = Instantiate(playerPrefab, position, Quaternion.identity);
-            
-            Movement move = player.GetComponent<Movement>();
-            move.isPlayerOne = (i == 0);
-            move.tileMap = tileMap;
-            move.walkableIndices = walkableTileIndices;
+            if (x >= 0 && x < tileMap.GetLength(0) && z >= 0 && z < tileMap.GetLength(1) && walkableTileIndices.Contains(tileMap[x, z]))
+            {
+                Vector3 position = new Vector3(x, 1, z);
+                GameObject player = Instantiate(playerPrefab, position, Quaternion.identity);
+
+                Movement move = player.GetComponent<Movement>();
+                move.isPlayerOne = (i == 0);
+                move.tileMap = tileMap;
+                move.walkableIndices = walkableTileIndices;
+            }
+            else
+            {
+                Debug.LogError($"Počiatočná pozícia hráča {i+1} ({x}, {z}) nie je na priechodnej dlaždici!");
+            }
         }
     }
 }
