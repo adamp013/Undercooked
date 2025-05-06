@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ManagerJedla : MonoBehaviour
 {
-    public List<Food> VratVysledokReceptu(Food jedlo) //Output / dalsia forma
+    public List<Food> VratVysledokReceptu(Food jedlo, int stanica) //Output / dalsia forma
     {
         return jedlo.jedla;
     }

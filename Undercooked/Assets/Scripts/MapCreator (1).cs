@@ -5,6 +5,7 @@ public class MapCreator : MonoBehaviour
 {
     public List<GameObject> tilePrefabs; // prefabrikáty reprezentujúce rôzne typy dlaždíc (index = typ)
     public int[,] tileMap; // 2D pole indexov, napr. 0 = podlaha, 1 = stena
+    public GameObject[,] stMap;
     public List<int> walkableTileIndices; // spoločný zoznam priechodných dlaždíc pre všetkých hráčov
     public (int, int)[] playerStartPositions; // počiatočné pozície hráčov (x, z)
     public GameObject playerPrefab;
@@ -17,6 +18,7 @@ public class MapCreator : MonoBehaviour
             {1,0,0,1},
             {1,2,2,1}
         };
+        
         walkableTileIndices = new List<int>() { 0 };
         playerStartPositions = new (int,int)[2] {
             (1,1),
@@ -30,6 +32,7 @@ public class MapCreator : MonoBehaviour
     {
         int width = tileMap.GetLength(0);
         int height = tileMap.GetLength(1);
+        stMap = new GameObject[width,height];
 
         for (int x = 0; x < width; x++)
         {
@@ -39,7 +42,7 @@ public class MapCreator : MonoBehaviour
                 if (tileIndex >= 0 && tileIndex < tilePrefabs.Count)
                 {
                     Vector3 position = new Vector3(x, 0, z); // každý tile je 1 unit od seba
-                    Instantiate(tilePrefabs[tileIndex], position, Quaternion.identity, transform);
+                    stMap[x, z] = Instantiate(tilePrefabs[tileIndex], position, Quaternion.identity, transform);
                 }
                 else
                 {
@@ -62,6 +65,7 @@ public class MapCreator : MonoBehaviour
                 Movement move = player.GetComponent<Movement>();
                 move.isPlayerOne = (i == 0);
                 move.tileMap = tileMap;
+                move.stMap = stMap;
                 move.walkableIndices = walkableTileIndices;
             }
             else

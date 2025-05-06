@@ -13,7 +13,7 @@ public class WheelScript : MonoBehaviour
 
     void Start()
     {
-        
+        GenerateWheel(3);
     }
 
     private void GenerateWheel(int numberOfItems)

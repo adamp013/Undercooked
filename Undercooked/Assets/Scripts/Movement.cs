@@ -3,16 +3,62 @@ using System.Collections.Generic;
 
 public class Movement : MonoBehaviour
 {
-    public bool isPlayerOne;
+    public bool isPlayerOne;//prvy hrac su cispky
     public int[,] tileMap;
+    public GameObject[,] stMap;
     public List<int> walkableIndices;
     public float speed = 5f;
     public float width = 0.9f; // šírka hráča (používa sa na kolízie)
-
+    public bool interacting = false; //interacting vyberanie suroviny
+    public Stanica interactingStation;
+    public Food holdingFood;
+    public bool holding = false;//drzis objekt neskor pridaj jedlo class premennu na vec co drzis
+    public bool cooking = false; //interacting with station
     public int obs = 0;
     void Update()
     {
-        if (tileMap != null)
+        KeyCode[] keycodes = new KeyCode[4]{
+            KeyCode.N, KeyCode.Q,
+            KeyCode.M, KeyCode.E
+        };
+        if (tileMap != null) { return; }
+        if (holding)
+        {
+            //bool grabPustenie = isPlayerOne ? Input.GetKeyUp(keycodes[2]) : Input.GetKeyUp(keycodes[3]);
+            //bool grabAktivne = isPlayerOne ? Input.GetKey(keycodes[2]) : Input.GetKey(keycodes[3]);
+            //zatial nic
+        }
+        if (interacting || cooking)
+        {
+            bool interactPustenie = isPlayerOne ? Input.GetKeyUp(keycodes[0]) : Input.GetKeyUp(keycodes[1]);
+            bool interactAktivne = isPlayerOne ? Input.GetKey(keycodes[0]) : Input.GetKey(keycodes[1]);
+            if (interacting)
+            {
+                if (interactAktivne)
+                {
+                    interactingStation.Select();
+                }
+                if (interactPustenie)
+                {
+                    holdingFood = interactingStation.EndSelect(isPlayerOne);
+                    holding = true;
+                    interactingStation = null;
+                    interacting = false;
+                }
+            }
+            else if (cooking)
+            {
+                if (interactAktivne)
+                {
+                    interactingStation.Interact();
+                }
+                if (interactPustenie)
+                {
+                    interactingStation.EndInteract();
+                }
+            }
+        }
+        else
         {
             obs = tileMap.GetLength(0) + tileMap.GetLength(1);
             float h = isPlayerOne ? Input.GetAxis("Horizontal") : Input.GetAxis("Horizontal2");
@@ -21,7 +67,119 @@ public class Movement : MonoBehaviour
             Vector3 input = new Vector3(h, 0, v).normalized;
             Vector3 dir = input * speed * Time.deltaTime;
 
-            transform.position += GetAllowedMovement(dir);
+            float buffer = 0.01f;
+            List<(int, int)> places = new List<(int, int)>();
+            if (h > buffer)
+            {
+                places.Add((1, 0));
+                if (v > buffer)
+                {
+                    places.Add((1, 1));
+                }
+                else if (v < -buffer)
+                {
+                    places.Add((1, -1));
+                }
+            }
+            else if (h < -buffer)
+            {
+                places.Add((-1, 0));
+                if (v > buffer)
+                {
+                    places.Add((-1, 1));
+                }
+                else if (v < -buffer)
+                {
+                    places.Add((-1, -1));
+                }
+            }
+            if (v > buffer)
+            {
+                places.Add((0, 1));
+            }
+            else if (v < -buffer)
+            {
+                places.Add((0, -1));
+            }
+
+            bool interact = isPlayerOne ? Input.GetKeyDown(keycodes[0]) : Input.GetKeyDown(keycodes[1]);
+            bool grab = isPlayerOne ? Input.GetKeyDown(keycodes[2]) : Input.GetKeyDown(keycodes[3]);
+
+            if (!interact)
+            {
+                transform.position += GetAllowedMovement(dir);
+                if (!grab)
+                {
+                    return;
+                }
+            }
+
+            int px = Mathf.RoundToInt(transform.position.x);
+            int pz = Mathf.RoundToInt(transform.position.z);
+            for (int i = 0; i < places.Count; i++)
+            {
+                int x = places[i].Item1 + px;
+                int z = places[i].Item2 + pz;
+            }
+            places.Sort((x, z) =>
+            {
+                float dx = Mathf.Pow((float)x.Item1 - (float)px, 2f) + Mathf.Pow((float)x.Item2 - (float)pz, 2f);
+                float dz = Mathf.Pow((float)z.Item1 - (float)px, 2f) + Mathf.Pow((float)z.Item2 - (float)pz, 2f);
+                return dx.CompareTo(dz); // porovná floaty a vráti int
+            });
+            (int, int) end = (-1, -1);
+            while (places.Count > 0)
+            {
+                Stanica st = stMap[places[0].Item1, places[0].Item2].GetComponent<Stanica>();
+                if (st == null)
+                {
+                    places.RemoveAt(0);
+                    continue;
+                }
+                if (interact)
+                {
+                    if (holding)
+                    {
+                        places.RemoveAt(0);
+                        continue;
+                    }
+                    bool act = st.activneInteractable;
+                    bool free = st.free;
+                    if (st.hasOutputs)
+                    {
+                        interacting = true;
+                        st.StartSelect();
+                        interactingStation = st;
+                        //tu spavnuj rozoberanie polic
+                    }
+                    else if (st.activneInteractable && !st.activne && st.hasInput)
+                    {
+                        cooking = true;
+                        st.StartInteract();
+                        interactingStation = st;
+                    }
+                    //tu je interact
+                }
+                else
+                {
+                    if (st.hasOutput)
+                    {
+                        holdingFood = st.Grab();
+                        holding = (holdingFood != null);
+                    }
+                    else if (!st.activne && st.free && holding)
+                    {
+                        if (holdingFood != null)
+                        {
+                            st.Place(holdingFood);
+                        }
+                        holding = false;
+                        holdingFood = null;
+                    }
+                    //tu je grab
+                }
+                places.RemoveAt(0);
+            }
         }
     }
 
@@ -54,7 +212,7 @@ public class Movement : MonoBehaviour
             zDih = zDih || IsColliding(g[i] + zMovement);
         }
 
-        return (!xDih ? xMovement : new Vector3(0,0,0)) + (!zDih ? zMovement : new Vector3(0,0,0));
+        return (!xDih ? xMovement : new Vector3(0, 0, 0)) + (!zDih ? zMovement : new Vector3(0, 0, 0));
     }
 
     bool IsColliding(Vector3 center)
