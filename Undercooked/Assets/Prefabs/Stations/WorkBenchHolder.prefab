@@ -86,15 +86,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c66b1c710ba0e44bcb4367a1fb508144, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.774501
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c66b1c710ba0e44bcb4367a1fb508144, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.718539
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c66b1c710ba0e44bcb4367a1fb508144, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -13.955433
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c66b1c710ba0e44bcb4367a1fb508144, type: 3}
       propertyPath: m_LocalRotation.w
@@ -191,7 +191,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2631081429674300933, guid: cd1ccfd7508220f43af1d1d87456c56c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -13.75
+      value: 0.233
       objectReference: {fileID: 0}
     - target: {fileID: 2631081429674300933, guid: cd1ccfd7508220f43af1d1d87456c56c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -211,11 +211,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2631081429674300933, guid: cd1ccfd7508220f43af1d1d87456c56c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 2.76
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2631081429674300933, guid: cd1ccfd7508220f43af1d1d87456c56c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 6.58
+      value: 0.588
       objectReference: {fileID: 0}
     - target: {fileID: 2631081429674300933, guid: cd1ccfd7508220f43af1d1d87456c56c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -228,6 +228,10 @@ PrefabInstance:
     - target: {fileID: 2631081429674300933, guid: cd1ccfd7508220f43af1d1d87456c56c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2933767497781726156, guid: cd1ccfd7508220f43af1d1d87456c56c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.007
       objectReference: {fileID: 0}
     - target: {fileID: 3203994540281605487, guid: cd1ccfd7508220f43af1d1d87456c56c, type: 3}
       propertyPath: m_AnchorMax.x
