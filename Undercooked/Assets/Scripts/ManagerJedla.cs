@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class ManagerJedla : MonoBehaviour
 {
-    public Food jedlo;
-    public List<int> VratVysledokReceptu(Food jedlo) //Output / dalsia forma
+    public List<Food> VratVysledokReceptu(Food jedlo) //Output / dalsia forma
     {
         return jedlo.jedla;
     }
@@ -22,7 +21,7 @@ public class ManagerJedla : MonoBehaviour
     
     void Start()
     {
-        Debug.Log(VratVysledokReceptu(jedlo));
+
     }
     void Update()
     {

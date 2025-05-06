@@ -6,10 +6,9 @@ public class Food : MonoBehaviour
 {
     public string nazov;
     public int index;
-    public int[] vysledky;
     public int stanica;
     public float cena;
-    public List<int> jedla;
+    public List<Food> jedla;
     void Start()
     {
         

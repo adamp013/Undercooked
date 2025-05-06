@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WheelScript : MonoBehaviour
@@ -7,15 +9,14 @@ public class WheelScript : MonoBehaviour
     public GameObject itemPlaceholderPrefab;
 
     [Header("Settings")]
-    public int numberOfItems = 4;
     public float radius = 100f;
 
     void Start()
     {
-        GenerateWheel();
+        
     }
 
-    void GenerateWheel()
+    private void GenerateWheel(int numberOfItems)
     {
         float angleStep = 360f / numberOfItems; //jeden segment
 
@@ -45,5 +46,10 @@ public class WheelScript : MonoBehaviour
                 item.transform.localRotation = Quaternion.identity;
             }
         }
+    }
+    public int Choice(List<Food> jedla) //ma byt int nigger
+    {
+        GenerateWheel(jedla.Count);
+        return 0;
     }
 }
