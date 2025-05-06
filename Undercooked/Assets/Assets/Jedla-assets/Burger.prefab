@@ -47,11 +47,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nazov: Burger
   index: 0
-  vysledky: 00000000
-  stanica: 0
+  stanica: 1
   cena: 0
   jedla:
-  - {fileID: 0}
+  - {fileID: 8727492168400236195, guid: c9acfa364b5a31f45b1798624d9e7f85, type: 3}
+  - {fileID: 1852693453377058199, guid: b80a7bd9ecf2ecd47933dbee9f9af829, type: 3}
+  - {fileID: 137936400850910292, guid: 8edc8ef7f7edad74da6921ba7d17a2bc, type: 3}
+  - {fileID: 8065041384573159504, guid: dc0cf0f7dc0792f4c9244c6c5d6129c2, type: 3}
+  - {fileID: 6472148106332067471, guid: 0fc21e1d440339943a543c4b57eacfe3, type: 3}
+  img: {fileID: 0}
 --- !u!1001 &8527627836634477452
 PrefabInstance:
   m_ObjectHideFlags: 0

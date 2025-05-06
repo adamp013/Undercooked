@@ -9,6 +9,7 @@ public class Food : MonoBehaviour
     public int stanica;
     public float cena;
     public List<Food> jedla;
+    public Sprite img;
     void Start()
     {
         
