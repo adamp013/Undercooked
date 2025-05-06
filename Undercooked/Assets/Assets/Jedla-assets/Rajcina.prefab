@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1441263424828014061
+--- !u!1 &4013316365489841003
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,109 +8,108 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1566169315067793503}
-  - component: {fileID: 2704227473842607175}
+  - component: {fileID: 3652108697947108199}
+  - component: {fileID: 8078188614394960685}
   m_Layer: 0
-  m_Name: cesto
+  m_Name: Rajcina
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1566169315067793503
+--- !u!4 &3652108697947108199
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1441263424828014061}
+  m_GameObject: {fileID: 4013316365489841003}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4724661667783162877}
+  - {fileID: 2337478295575057224}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2704227473842607175
+--- !u!114 &8078188614394960685
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1441263424828014061}
+  m_GameObject: {fileID: 4013316365489841003}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5bf542586112f954db653702e9a5a8a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nazov: meat
-  index: 7
-  stanica: 4
-  cena: 5
-  jedla:
-  - {fileID: 3951818245955756594, guid: 57795e28b97c58d4e94a4ed31ee99453, type: 3}
-  img: {fileID: -2030828875, guid: 0ea1e4dd7dec67e4c835628aaf11d3cc, type: 3}
---- !u!1001 &5775891663155506722
+  nazov: tomato
+  index: 10
+  stanica: -1
+  cena: 8
+  jedla: []
+  img: {fileID: -376292968, guid: 2a73f94e92977f642bac9149dfed2456, type: 3}
+--- !u!1001 &4629239561321646179
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1566169315067793503}
+    m_TransformParent: {fileID: 3652108697947108199}
     m_Modifications:
-    - target: {fileID: 1277131257445651935, guid: 199bfef80eb0b43f9b547e7683e1a429, type: 3}
+    - target: {fileID: 6939546724988672811, guid: f6a7ca122d49c44f1aeb816062f686f7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 1277131257445651935, guid: 199bfef80eb0b43f9b547e7683e1a429, type: 3}
+    - target: {fileID: 6939546724988672811, guid: f6a7ca122d49c44f1aeb816062f686f7, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1277131257445651935, guid: 199bfef80eb0b43f9b547e7683e1a429, type: 3}
+    - target: {fileID: 6939546724988672811, guid: f6a7ca122d49c44f1aeb816062f686f7, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1277131257445651935, guid: 199bfef80eb0b43f9b547e7683e1a429, type: 3}
+    - target: {fileID: 6939546724988672811, guid: f6a7ca122d49c44f1aeb816062f686f7, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1277131257445651935, guid: 199bfef80eb0b43f9b547e7683e1a429, type: 3}
+    - target: {fileID: 6939546724988672811, guid: f6a7ca122d49c44f1aeb816062f686f7, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1277131257445651935, guid: 199bfef80eb0b43f9b547e7683e1a429, type: 3}
+    - target: {fileID: 6939546724988672811, guid: f6a7ca122d49c44f1aeb816062f686f7, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 1277131257445651935, guid: 199bfef80eb0b43f9b547e7683e1a429, type: 3}
+    - target: {fileID: 6939546724988672811, guid: f6a7ca122d49c44f1aeb816062f686f7, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 1277131257445651935, guid: 199bfef80eb0b43f9b547e7683e1a429, type: 3}
+    - target: {fileID: 6939546724988672811, guid: f6a7ca122d49c44f1aeb816062f686f7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1277131257445651935, guid: 199bfef80eb0b43f9b547e7683e1a429, type: 3}
+    - target: {fileID: 6939546724988672811, guid: f6a7ca122d49c44f1aeb816062f686f7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1277131257445651935, guid: 199bfef80eb0b43f9b547e7683e1a429, type: 3}
+    - target: {fileID: 6939546724988672811, guid: f6a7ca122d49c44f1aeb816062f686f7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8341132103768996400, guid: 199bfef80eb0b43f9b547e7683e1a429, type: 3}
+    - target: {fileID: 7711825394073895313, guid: f6a7ca122d49c44f1aeb816062f686f7, type: 3}
       propertyPath: m_Name
-      value: Dough
+      value: Tomato
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 199bfef80eb0b43f9b547e7683e1a429, type: 3}
---- !u!4 &4724661667783162877 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: f6a7ca122d49c44f1aeb816062f686f7, type: 3}
+--- !u!4 &2337478295575057224 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1277131257445651935, guid: 199bfef80eb0b43f9b547e7683e1a429, type: 3}
-  m_PrefabInstance: {fileID: 5775891663155506722}
+  m_CorrespondingSourceObject: {fileID: 6939546724988672811, guid: f6a7ca122d49c44f1aeb816062f686f7, type: 3}
+  m_PrefabInstance: {fileID: 4629239561321646179}
   m_PrefabAsset: {fileID: 0}
