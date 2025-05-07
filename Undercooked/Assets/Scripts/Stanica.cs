@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Stanica : MonoBehaviour
 {
@@ -19,8 +20,9 @@ public class Stanica : MonoBehaviour
     public bool free = true;//ma outputy aj inputy na false
     public WheelScript wheel;
     public Timer timer;
-    [SerializeField] public GameObject canvasTimer;
+    public Image targetImage;
     public ManagerJedla mj;
+    public bool Player1isTouching = false;
 
     public void Select()
     {
@@ -28,12 +30,14 @@ public class Stanica : MonoBehaviour
     }
     public void StartSelect()
     {
-        //vygeneruj wheel
+        wheel.GenerateWheel(output);
     }
     public Food EndSelect(bool isPlayerOne)
     {
         //int
-        int poradie = wheel.Choice(output);
+        float h = isPlayerOne ? Input.GetAxis("Horizontal") : Input.GetAxis("Horizontal2");
+        float v = isPlayerOne ? Input.GetAxis("Vertical") : Input.GetAxis("Vertical2");
+        int poradie = wheel.Choice(output.Count, h,v);
         Food p = output[poradie];
         output.RemoveAt(poradie);
         if (output.Count == 1)
@@ -45,24 +49,35 @@ public class Stanica : MonoBehaviour
     }
     public void Interact()
     {
+
+        //timer.gameObject.SetActive(true);
+
+        Timer holder = targetImage.GetComponent<Timer>();
+        
+
+        
         time += Time.deltaTime;
         if (time > fullTime)
         {
             if (activneInteractable)
             {
-                //end napr zmen timer na zelenu
+                if (holder != null && holder.Image != null)
+                {
+                    holder.Image.color = Color.green; //SPRAV TO GREEN
+                }
             }
             else if (!canFire)
             {
                 //timer zruz a schovaj
-                canvasTimer.SetActive(false);
+                timer.gameObject.SetActive(false);
                 output = mj.VratVysledokReceptu(input, typStanice);
             }
             else
             {
+                timer.sliderMaxValue = timeZhorenie;
                 if (time > timeZhorenie)
                 {
-                    canvasTimer.SetActive(false);
+                    timer.gameObject.SetActive(false);
                 }
                 else
                 {
@@ -71,21 +86,38 @@ public class Stanica : MonoBehaviour
                 //timer pri ohni
             }
         }
+        else
+        {
+
+        }
     }
     public void StartInteract()
     {
+        if (canFire && time > fullTime)
+        {
+            timer.sliderMaxValue = timeZhorenie;
+        }
+        else
+        {
+            timer.sliderMaxValue = fullTime;
+        }
+        timer.gameObject.SetActive(true);
+        timer.TimeResumed();
+
         if (!activneInteractable)
         {
             timer.elapsedTime = 0f;
-            timer.TimeResumed();
-            canvasTimer.SetActive(true);
         }
+
     }
     public void EndInteract()
     {
         if (activneInteractable) {
             if (time > fullTime) {
+                hasInput = false;
+                activne = false;
                 output = mj.VratVysledokReceptu(input, typStanice);
+                input = null;
             }
             timer.TimeStopped();
         }
@@ -97,6 +129,7 @@ public class Stanica : MonoBehaviour
             Food o = output[0];
             output = new List<Food>();
             free = true;
+            hasOutput = false;
             activne = false;
             return o;
         }
@@ -104,6 +137,7 @@ public class Stanica : MonoBehaviour
     }
     public void Place(Food jedlo)
     {
+        hasInput = true;
         input = jedlo;
         free = false;
         if (!activneInteractable)

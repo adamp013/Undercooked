@@ -774,6 +774,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 879900756475891380}
+  - component: {fileID: -429564079537259896}
   m_Layer: 0
   m_Name: Burger
   m_TagString: Untagged
@@ -798,6 +799,30 @@ Transform:
   - {fileID: 5665738934072101561}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-429564079537259896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5385348623995199914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf542586112f954db653702e9a5a8a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nazov: Burger
+  index: 0
+  stanica: 1
+  cena: 0
+  jedla:
+  - {fileID: 8727492168400236195, guid: c9acfa364b5a31f45b1798624d9e7f85, type: 3}
+  - {fileID: 1852693453377058199, guid: b80a7bd9ecf2ecd47933dbee9f9af829, type: 3}
+  - {fileID: 8447774213924935877, guid: 90c2a4cdd91f04c629d4c6bea23d36d9, type: 3}
+  - {fileID: 6472148106332067471, guid: 0fc21e1d440339943a543c4b57eacfe3, type: 3}
+  - {fileID: 8065041384573159504, guid: dc0cf0f7dc0792f4c9244c6c5d6129c2, type: 3}
+  img: {fileID: 0}
+  prefub: {fileID: 0}
 --- !u!1 &6310975837739265944
 GameObject:
   m_ObjectHideFlags: 0

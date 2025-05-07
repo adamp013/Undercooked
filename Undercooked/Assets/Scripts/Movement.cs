@@ -17,11 +17,12 @@ public class Movement : MonoBehaviour
     public int obs = 0;
     void Update()
     {
+
         KeyCode[] keycodes = new KeyCode[4]{
             KeyCode.N, KeyCode.Q,
             KeyCode.M, KeyCode.E
         };
-        if (tileMap != null) { return; }
+        if (tileMap == null) { return; }
         if (holding)
         {
             //bool grabPustenie = isPlayerOne ? Input.GetKeyUp(keycodes[2]) : Input.GetKeyUp(keycodes[3]);
@@ -36,10 +37,12 @@ public class Movement : MonoBehaviour
             {
                 if (interactAktivne)
                 {
+                    interactingStation.Player1isTouching = isPlayerOne;
                     interactingStation.Select();
                 }
                 if (interactPustenie)
                 {
+                    interactingStation.Player1isTouching = isPlayerOne;
                     holdingFood = interactingStation.EndSelect(isPlayerOne);
                     holding = true;
                     interactingStation = null;
@@ -55,6 +58,8 @@ public class Movement : MonoBehaviour
                 if (interactPustenie)
                 {
                     interactingStation.EndInteract();
+                    cooking = false;
+                    interactingStation = null;
                 }
             }
         }
@@ -105,6 +110,7 @@ public class Movement : MonoBehaviour
             bool interact = isPlayerOne ? Input.GetKeyDown(keycodes[0]) : Input.GetKeyDown(keycodes[1]);
             bool grab = isPlayerOne ? Input.GetKeyDown(keycodes[2]) : Input.GetKeyDown(keycodes[3]);
 
+
             if (!interact)
             {
                 transform.position += GetAllowedMovement(dir);
@@ -120,6 +126,7 @@ public class Movement : MonoBehaviour
             {
                 int x = places[i].Item1 + px;
                 int z = places[i].Item2 + pz;
+                places[i] = (x, z);
             }
             places.Sort((x, z) =>
             {
@@ -138,22 +145,25 @@ public class Movement : MonoBehaviour
                 }
                 if (interact)
                 {
+                  
                     if (holding)
                     {
                         places.RemoveAt(0);
                         continue;
                     }
-                    bool act = st.activneInteractable;
-                    bool free = st.free;
+                   
                     if (st.hasOutputs)
                     {
+                        Debug.Log("Outputy");
                         interacting = true;
+                        interactingStation.Player1isTouching = isPlayerOne;
                         st.StartSelect();
                         interactingStation = st;
                         //tu spavnuj rozoberanie polic
                     }
                     else if (st.activneInteractable && !st.activne && st.hasInput)
                     {
+                        Debug.Log("rezanie");
                         cooking = true;
                         st.StartInteract();
                         interactingStation = st;
