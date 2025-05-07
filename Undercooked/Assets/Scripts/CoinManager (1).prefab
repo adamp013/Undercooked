@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4059212527457263196}
   - component: {fileID: 4127674633095751633}
   - component: {fileID: 1087288538728495530}
+  - component: {fileID: -8930179132485193866}
   m_Layer: 0
   m_Name: CoinManager (1)
   m_TagString: Untagged
@@ -108,3 +109,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-8930179132485193866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7885493046926394634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76be16d490e5748f78ca1f456173143d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textMesh: {fileID: 3599080218395586188, guid: 90fd10b9a046245708a066b31ceba4a0, type: 3}
