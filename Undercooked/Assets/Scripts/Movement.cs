@@ -38,6 +38,7 @@ public class Movement : MonoBehaviour
         {
             heldObject.transform.position = holdPoint.position;
             heldObject.transform.rotation = holdPoint.rotation;
+            heldObject.transform.localScale = holdPoint.localScale;
         }
 
         if (interacting || cooking)
@@ -238,6 +239,7 @@ public class Movement : MonoBehaviour
         return !walkableIndices.Contains(tileMap[x, z]);
     }
 }
+<<<<<<< Updated upstream
 /*using UnityEngine;
 using System.Collections.Generic;
 
@@ -509,3 +511,5 @@ public class Movement : MonoBehaviour
         return !walkableIndices.Contains(tileMap[x, z]);
     }
 }*/
+=======
+>>>>>>> Stashed changes
