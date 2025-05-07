@@ -59,7 +59,7 @@ public class MapCreator : MonoBehaviour
             (int x, int z) = playerStartPositions[i];
             if (x >= 0 && x < tileMap.GetLength(0) && z >= 0 && z < tileMap.GetLength(1) && walkableTileIndices.Contains(tileMap[x, z]))
             {
-                Vector3 position = new Vector3(x, 1, z);
+                Vector3 position = new Vector3(x, 0, z);
                 GameObject player = Instantiate(playerPrefab, position, Quaternion.identity);
 
                 Movement move = player.GetComponent<Movement>();

@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d81c0b5f68c660947a910fb2edeffe0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linePrefab: {fileID: 5951057720422083138, guid: f5def9959d1ece14f85aac74188613a2, type: 3}
-  itemPlaceholderPrefab: {fileID: 1321798041822301129, guid: daf7a8d187fb6c74aa4801c102d58f67, type: 3}
+  linePrefab: {fileID: 5217383609313125752, guid: e34d25d9770f5494994a8dd70089f0a2, type: 3}
+  itemPlaceholderPrefab: {fileID: 1514974201105578768, guid: 11f09fc8866fa5f4d9b2732fcd3dd192, type: 3}
   radius: 100
 --- !u!1 &7878810802063385975
 GameObject:
@@ -148,6 +148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d81c0b5f68c660947a910fb2edeffe0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linePrefab: {fileID: 2474449912998605105, guid: e34d25d9770f5494994a8dd70089f0a2, type: 3}
-  itemPlaceholderPrefab: {fileID: 3809816752907935182, guid: f3b3b6440a9e25a4d990ab2f66ca06a8, type: 3}
+  linePrefab: {fileID: 5217383609313125752, guid: e34d25d9770f5494994a8dd70089f0a2, type: 3}
+  itemPlaceholderPrefab: {fileID: 1514974201105578768, guid: 11f09fc8866fa5f4d9b2732fcd3dd192, type: 3}
   radius: 100
