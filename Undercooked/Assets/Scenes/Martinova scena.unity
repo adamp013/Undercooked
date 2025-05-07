@@ -119,6 +119,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &102980678 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6463178476076617785, guid: 50d7d5da22ca1c5488c3d7c8680bdd62, type: 3}
+  m_PrefabInstance: {fileID: 602745122}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6e2f64a6f3edf642b7c6a027c11a370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &160643007 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2107428099108475704, guid: 50d7d5da22ca1c5488c3d7c8680bdd62, type: 3}
@@ -209,7 +220,7 @@ PrefabInstance:
     - target: {fileID: 9012535124804302459, guid: 50d7d5da22ca1c5488c3d7c8680bdd62, type: 3}
       propertyPath: timer
       value: 
-      objectReference: {fileID: 6708026528789483066, guid: cd1ccfd7508220f43af1d1d87456c56c, type: 3}
+      objectReference: {fileID: 102980678}
     - target: {fileID: 9012535124804302459, guid: 50d7d5da22ca1c5488c3d7c8680bdd62, type: 3}
       propertyPath: wheel
       value: 

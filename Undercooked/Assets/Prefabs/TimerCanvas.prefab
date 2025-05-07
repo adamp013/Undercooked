@@ -258,7 +258,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2631081429674300933
 RectTransform:
   m_ObjectHideFlags: 0
@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e2f64a6f3edf642b7c6a027c11a370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sliderMaxValue: 15
+  sliderMaxValue: 5
   elapsedTime: 0
   Image: {fileID: 0}
   mainSlider: {fileID: 77907286949477843}

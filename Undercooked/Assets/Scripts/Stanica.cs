@@ -23,6 +23,7 @@ public class Stanica : MonoBehaviour
     public Image targetImage;
     public ManagerJedla mj;
     public bool Player1isTouching = false;
+    public bool hori = false;
 
     public void Select()
     {
@@ -34,7 +35,6 @@ public class Stanica : MonoBehaviour
     }
     public Food EndSelect(bool isPlayerOne)
     {
-        //int
         float h = isPlayerOne ? Input.GetAxis("Horizontal") : Input.GetAxis("Horizontal2");
         float v = isPlayerOne ? Input.GetAxis("Vertical") : Input.GetAxis("Vertical2");
         int poradie = wheel.Choice(output.Count, h,v);
@@ -45,17 +45,16 @@ public class Stanica : MonoBehaviour
             hasOutput = true;
             hasOutputs = false;
         }
+        
         return p;
     }
     public void Interact()
     {
 
-        //timer.gameObject.SetActive(true);
-
         Timer holder = targetImage.GetComponent<Timer>();
-        
+        Debug.Log("Zapnut");timer.gameObject.SetActive(true);
 
-        
+
         time += Time.deltaTime;
         if (time > fullTime)
         {
@@ -69,30 +68,31 @@ public class Stanica : MonoBehaviour
             else if (!canFire)
             {
                 //timer zruz a schovaj
-                timer.gameObject.SetActive(false);
-                output = mj.VratVysledokReceptu(input, typStanice);
+                EndInteract();
             }
             else
             {
                 timer.sliderMaxValue = timeZhorenie;
                 if (time > timeZhorenie)
                 {
-                    timer.gameObject.SetActive(false);
+                    EndInteract();
                 }
-                else
+                else if (time > fullTime && !hori)
                 {
-
+                    hori = true;
+                    EndInteract();
                 }
                 //timer pri ohni
             }
         }
-        else
+        else if (!activneInteractable) 
         {
-
+            Debug.Log("Zapnut");timer.gameObject.SetActive(true);
         }
     }
     public void StartInteract()
     {
+
         if (canFire && time > fullTime)
         {
             timer.sliderMaxValue = timeZhorenie;
@@ -101,7 +101,8 @@ public class Stanica : MonoBehaviour
         {
             timer.sliderMaxValue = fullTime;
         }
-        timer.gameObject.SetActive(true);
+        Debug.Log("funguj");
+        Debug.Log("Zapnut");timer.gameObject.SetActive(true);
         timer.TimeResumed();
 
         if (!activneInteractable)
@@ -112,14 +113,51 @@ public class Stanica : MonoBehaviour
     }
     public void EndInteract()
     {
-        if (activneInteractable) {
-            if (time > fullTime) {
+        Debug.Log("koniec");
+        Debug.Log("vypnut");timer.gameObject.SetActive(false);
+        if (activneInteractable)
+        {
+            if (time > fullTime)
+            {
                 hasInput = false;
                 activne = false;
                 output = mj.VratVysledokReceptu(input, typStanice);
                 input = null;
             }
             timer.TimeStopped();
+        }
+        else if (time < timeZhorenie)
+        {
+            Debug.Log("varenie");
+            output = mj.VratVysledokReceptu(input, typStanice);
+            input = null;
+            hasInput = false;
+            if (output.Count == 1)
+            {
+                hasOutput = true;
+            }
+            else if (output.Count > 1)
+            {
+                hasOutputs = true;
+            }
+            else
+            {
+                free = true;
+            }
+            if (!canFire)
+            {
+                Debug.Log("vypnut");
+                timer.gameObject.SetActive(false);
+                timer.TimeStopped();
+            }
+        }
+        else if (canFire)
+        {
+            Debug.Log("Hori");
+            output = new List<Food>();
+            hasOutput = false;
+            hasOutputs = false;
+            free = true;
         }
     }
     public Food Grab()
@@ -153,7 +191,7 @@ public class Stanica : MonoBehaviour
 
     void Update()
     {
-        if (!activneInteractable && hasInput)
+        if (!activneInteractable && (hasInput || hori))
         {
             activne = true;
             Interact();
