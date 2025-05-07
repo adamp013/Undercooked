@@ -3,191 +3,210 @@ using System.Collections.Generic;
 
 public class Movement : MonoBehaviour
 {
-    public bool isPlayerOne;//prvy hrac su cispky
+    public bool isPlayerOne;
     public int[,] tileMap;
     public GameObject[,] stMap;
     public List<int> walkableIndices;
     public float speed = 5f;
-    public float width = 0.9f; // šírka hráča (používa sa na kolízie)
-    public bool interacting = false; //interacting vyberanie suroviny
+    public float width = 0.9f;
+    public bool interacting = false;
     public Stanica interactingStation;
     public Food holdingFood;
-    public bool holding = false;//drzis objekt neskor pridaj jedlo class premennu na vec co drzis
-    public bool cooking = false; //interacting with station
+    public bool holding = false;
+    public bool cooking = false;
     public int obs = 0;
+
+    public Transform holdPoint;
+    private GameObject heldObject;
+    private Vector3 lastInputDirection = Vector3.forward;
+
     void Update()
     {
-        KeyCode[] keycodes = new KeyCode[4]{
+        KeyCode[] keycodes = new KeyCode[4] {
             KeyCode.N, KeyCode.Q,
             KeyCode.M, KeyCode.E
         };
-        if (tileMap != null) { return; }
-        if (holding)
+
+        if (tileMap == null) return;
+
+        // Drop held item
+        if (holding && Input.GetKeyDown(KeyCode.Backspace))
         {
-            //bool grabPustenie = isPlayerOne ? Input.GetKeyUp(keycodes[2]) : Input.GetKeyUp(keycodes[3]);
-            //bool grabAktivne = isPlayerOne ? Input.GetKey(keycodes[2]) : Input.GetKey(keycodes[3]);
-            //zatial nic
+            DropHeldItem();
         }
+
+        // Update held object's position
+        if (heldObject != null)
+        {
+            heldObject.transform.position = holdPoint.position;
+            heldObject.transform.rotation = holdPoint.rotation;
+        }
+
         if (interacting || cooking)
         {
             bool interactPustenie = isPlayerOne ? Input.GetKeyUp(keycodes[0]) : Input.GetKeyUp(keycodes[1]);
             bool interactAktivne = isPlayerOne ? Input.GetKey(keycodes[0]) : Input.GetKey(keycodes[1]);
+
             if (interacting)
             {
-                if (interactAktivne)
-                {
-                    interactingStation.Select();
-                }
+                if (interactAktivne) interactingStation.Select();
                 if (interactPustenie)
                 {
                     holdingFood = interactingStation.EndSelect(isPlayerOne);
-                    holding = true;
+                    holding = holdingFood != null;
+
+                    if (holding)
+                    {
+                        heldObject = Instantiate(holdingFood.gameObject, holdPoint.position, Quaternion.identity);
+                        heldObject.transform.SetParent(holdPoint);
+                    }
+
                     interactingStation = null;
                     interacting = false;
                 }
             }
             else if (cooking)
             {
-                if (interactAktivne)
-                {
-                    interactingStation.Interact();
-                }
+                if (interactAktivne) interactingStation.Interact();
                 if (interactPustenie)
                 {
                     interactingStation.EndInteract();
+                    cooking = false;
+                    interactingStation = null;
                 }
             }
         }
         else
         {
             obs = tileMap.GetLength(0) + tileMap.GetLength(1);
+
             float h = isPlayerOne ? Input.GetAxis("Horizontal") : Input.GetAxis("Horizontal2");
             float v = isPlayerOne ? Input.GetAxis("Vertical") : Input.GetAxis("Vertical2");
 
             Vector3 input = new Vector3(h, 0, v).normalized;
             Vector3 dir = input * speed * Time.deltaTime;
 
+            if (input != Vector3.zero)
+            {
+                lastInputDirection = input;
+            }
+
+            Vector3 move = GetAllowedMovement(dir);
+            transform.position += move;
+
             float buffer = 0.01f;
             List<(int, int)> places = new List<(int, int)>();
-            if (h > buffer)
-            {
-                places.Add((1, 0));
-                if (v > buffer)
-                {
-                    places.Add((1, 1));
-                }
-                else if (v < -buffer)
-                {
-                    places.Add((1, -1));
-                }
-            }
-            else if (h < -buffer)
-            {
-                places.Add((-1, 0));
-                if (v > buffer)
-                {
-                    places.Add((-1, 1));
-                }
-                else if (v < -buffer)
-                {
-                    places.Add((-1, -1));
-                }
-            }
-            if (v > buffer)
-            {
-                places.Add((0, 1));
-            }
-            else if (v < -buffer)
-            {
-                places.Add((0, -1));
-            }
+            int px = Mathf.RoundToInt(transform.position.x);
+            int pz = Mathf.RoundToInt(transform.position.z);
+
+            if (h > buffer) { places.Add((1, 0)); if (v > buffer) places.Add((1, 1)); else if (v < -buffer) places.Add((1, -1)); }
+            else if (h < -buffer) { places.Add((-1, 0)); if (v > buffer) places.Add((-1, 1)); else if (v < -buffer) places.Add((-1, -1)); }
+            if (v > buffer) places.Add((0, 1));
+            else if (v < -buffer) places.Add((0, -1));
 
             bool interact = isPlayerOne ? Input.GetKeyDown(keycodes[0]) : Input.GetKeyDown(keycodes[1]);
             bool grab = isPlayerOne ? Input.GetKeyDown(keycodes[2]) : Input.GetKeyDown(keycodes[3]);
 
-            if (!interact)
+            places.Sort((a, b) =>
             {
-                transform.position += GetAllowedMovement(dir);
-                if (!grab)
-                {
-                    return;
-                }
-            }
-
-            int px = Mathf.RoundToInt(transform.position.x);
-            int pz = Mathf.RoundToInt(transform.position.z);
-            for (int i = 0; i < places.Count; i++)
-            {
-                int x = places[i].Item1 + px;
-                int z = places[i].Item2 + pz;
-            }
-            places.Sort((x, z) =>
-            {
-                float dx = Mathf.Pow((float)x.Item1 - (float)px, 2f) + Mathf.Pow((float)x.Item2 - (float)pz, 2f);
-                float dz = Mathf.Pow((float)z.Item1 - (float)px, 2f) + Mathf.Pow((float)z.Item2 - (float)pz, 2f);
-                return dx.CompareTo(dz); // porovná floaty a vráti int
+                float da = (a.Item1 - px) * (a.Item1 - px) + (a.Item2 - pz) * (a.Item2 - pz);
+                float db = (b.Item1 - px) * (b.Item1 - px) + (b.Item2 - pz) * (b.Item2 - pz);
+                return da.CompareTo(db);
             });
-            (int, int) end = (-1, -1);
+
             while (places.Count > 0)
             {
-                Stanica st = stMap[places[0].Item1, places[0].Item2].GetComponent<Stanica>();
+                int x = places[0].Item1 + px;
+                int z = places[0].Item2 + pz;
+
+                if (x < 0 || z < 0 || x >= stMap.GetLength(0) || z >= stMap.GetLength(1))
+                {
+                    places.RemoveAt(0);
+                    continue;
+                }
+
+                Stanica st = stMap[x, z]?.GetComponent<Stanica>();
                 if (st == null)
                 {
                     places.RemoveAt(0);
                     continue;
                 }
+
+                float dist = Vector3.Distance(transform.position, st.transform.position);
+                if (dist > 1.5f)
+                {
+                    places.RemoveAt(0);
+                    continue;
+                }
+
                 if (interact)
                 {
-                    if (holding)
-                    {
-                        places.RemoveAt(0);
-                        continue;
-                    }
-                    bool act = st.activneInteractable;
-                    bool free = st.free;
+                    if (holding) { places.RemoveAt(0); continue; }
+
                     if (st.hasOutputs)
                     {
                         interacting = true;
                         st.StartSelect();
                         interactingStation = st;
-                        //tu spavnuj rozoberanie polic
+                        break;
                     }
                     else if (st.activneInteractable && !st.activne && st.hasInput)
                     {
                         cooking = true;
                         st.StartInteract();
                         interactingStation = st;
+                        break;
                     }
-                    //tu je interact
                 }
-                else
+                else if (grab)
                 {
                     if (st.hasOutput)
                     {
                         holdingFood = st.Grab();
-                        holding = (holdingFood != null);
-                    }
-                    else if (!st.activne && st.free && holding)
-                    {
                         if (holdingFood != null)
                         {
-                            st.Place(holdingFood);
+                            holding = true;
+                            heldObject = Instantiate(holdingFood.gameObject, holdPoint.position, Quaternion.identity);
+                            heldObject.transform.SetParent(holdPoint);
                         }
+                    }
+                    else if (!st.activne && st.free && holding && holdingFood != null)
+                    {
+                        st.Place(holdingFood);
                         holding = false;
                         holdingFood = null;
+
+                        if (heldObject != null)
+                        {
+                            Destroy(heldObject);
+                            heldObject = null;
+                        }
                     }
-                    //tu je grab
+                    break;
                 }
+
                 places.RemoveAt(0);
             }
         }
+    }
+
+    void DropHeldItem()
+    {
+        if (heldObject != null)
+        {
+            heldObject.transform.SetParent(null);
+            heldObject.transform.position = transform.position + lastInputDirection.normalized;
+            heldObject = null;
+        }
+
+        holding = false;
+        holdingFood = null;
     }
 
     Vector3 GetAllowedMovement(Vector3 movementDelta)
     {
         Vector3 pos = transform.position;
         float halfWidth = width / 2f;
-
 
         Vector3[] cp = new Vector3[4];
         cp[0] = new Vector3(pos.x - halfWidth, 0, pos.z - halfWidth);
@@ -198,21 +217,16 @@ public class Movement : MonoBehaviour
         Vector3 xMovement = new Vector3(movementDelta.x, 0, 0);
         Vector3 zMovement = new Vector3(0, 0, movementDelta.z);
 
-        bool xDih = false;
-        bool zDih = false;
-
-        Vector3[] g = cp;
-        for (int i = 0; i < 4; i++)
-        {
-            xDih = xDih || IsColliding(g[i] + xMovement);
-        }
+        bool xBlocked = false;
+        bool zBlocked = false;
 
         for (int i = 0; i < 4; i++)
         {
-            zDih = zDih || IsColliding(g[i] + zMovement);
+            xBlocked = xBlocked || IsColliding(cp[i] + xMovement);
+            zBlocked = zBlocked || IsColliding(cp[i] + zMovement);
         }
 
-        return (!xDih ? xMovement : new Vector3(0, 0, 0)) + (!zDih ? zMovement : new Vector3(0, 0, 0));
+        return (!xBlocked ? xMovement : Vector3.zero) + (!zBlocked ? zMovement : Vector3.zero);
     }
 
     bool IsColliding(Vector3 center)
@@ -221,9 +235,7 @@ public class Movement : MonoBehaviour
         int z = Mathf.RoundToInt(center.z);
 
         if (x < 0 || z < 0 || x >= tileMap.GetLength(0) || z >= tileMap.GetLength(1))
-        {
             return true;
-        }
 
         return !walkableIndices.Contains(tileMap[x, z]);
     }
