@@ -50,9 +50,8 @@ public class Stanica : MonoBehaviour
     }
     public void Interact()
     {
-
         Timer holder = targetImage.GetComponent<Timer>();
-        Debug.Log("Zapnut");timer.gameObject.SetActive(true);
+        timer.gameObject.SetActive(true);
 
 
         time += Time.deltaTime;
@@ -87,7 +86,7 @@ public class Stanica : MonoBehaviour
         }
         else if (!activneInteractable) 
         {
-            Debug.Log("Zapnut");timer.gameObject.SetActive(true);
+            timer.gameObject.SetActive(true);
         }
     }
     public void StartInteract()
@@ -101,8 +100,7 @@ public class Stanica : MonoBehaviour
         {
             timer.sliderMaxValue = fullTime;
         }
-        Debug.Log("funguj");
-        Debug.Log("Zapnut");timer.gameObject.SetActive(true);
+        timer.gameObject.SetActive(true);
         timer.TimeResumed();
 
         if (!activneInteractable)
@@ -113,8 +111,7 @@ public class Stanica : MonoBehaviour
     }
     public void EndInteract()
     {
-        Debug.Log("koniec");
-        Debug.Log("vypnut");timer.gameObject.SetActive(false);
+         timer.gameObject.SetActive(false);
         if (activneInteractable)
         {
             if (time > fullTime)
@@ -128,7 +125,6 @@ public class Stanica : MonoBehaviour
         }
         else if (time < timeZhorenie)
         {
-            Debug.Log("varenie");
             output = mj.VratVysledokReceptu(input, typStanice);
             input = null;
             hasInput = false;
@@ -146,14 +142,12 @@ public class Stanica : MonoBehaviour
             }
             if (!canFire)
             {
-                Debug.Log("vypnut");
                 timer.gameObject.SetActive(false);
                 timer.TimeStopped();
             }
         }
         else if (canFire)
         {
-            Debug.Log("Hori");
             output = new List<Food>();
             hasOutput = false;
             hasOutputs = false;
@@ -162,7 +156,7 @@ public class Stanica : MonoBehaviour
     }
     public Food Grab()
     {
-        if (hasOutput)
+        if (hasOutput && output.Count > 0)
         {
             Food o = output[0];
             output = new List<Food>();
@@ -206,5 +200,10 @@ public class Stanica : MonoBehaviour
             hasOutputs = true;
             hasOutput = false;
         }
+        ChildUpdate();
+    }
+    public virtual void ChildUpdate()
+    {
+
     }
 }
