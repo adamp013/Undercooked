@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7757773373365596712}
+  - component: {fileID: 9127920517960175904}
   m_Layer: 0
   m_Name: Mixer
   m_TagString: Untagged
@@ -34,6 +35,37 @@ Transform:
   - {fileID: 5010740357384315967}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!114 &9127920517960175904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5434423430773155041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 509fe40f3d37e9849820fde062fb2503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fullTime: 5
+  timeZhorenie: 15
+  canFire: 0
+  activneInteractable: 1
+  activne: 0
+  time: 0
+  typStanice: 0
+  input: {fileID: 0}
+  output: []
+  hasInput: 0
+  hasOutput: 0
+  hasOutputs: 0
+  free: 1
+  wheel: {fileID: 0}
+  timer: {fileID: 0}
+  targetImage: {fileID: 0}
+  mj: {fileID: 0}
+  Player1isTouching: 0
+  hori: 0
 --- !u!1001 &3187388916569589106
 PrefabInstance:
   m_ObjectHideFlags: 0

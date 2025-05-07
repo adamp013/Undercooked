@@ -4,8 +4,6 @@ using System.Collections.Generic;
 public class Movement : MonoBehaviour
 {
     public bool isPlayerOne;
-<<<<<<< HEAD
-=======
     public int[,] tileMap;
     public GameObject[,] stMap;
     public List<int> walkableIndices;
@@ -246,7 +244,6 @@ using System.Collections.Generic;
 public class Movement : MonoBehaviour
 {
     public bool isPlayerOne;//prvy hrac su cispky
->>>>>>> 629a31ae2ab6fc18f2aa608d3ba408601f8b9bab
     public int[,] tileMap;
     public GameObject[,] stMap;
     public List<int> walkableIndices;
@@ -265,17 +262,6 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-<<<<<<< HEAD
-        KeyCode[] keycodes = new KeyCode[4] {
-            KeyCode.N, KeyCode.Q,
-            KeyCode.M, KeyCode.E
-        };
-
-        if (tileMap == null) return;
-
-        // Drop held item
-        if (holding && Input.GetKeyDown(KeyCode.Backspace))
-=======
 
         KeyCode[] keycodes = new KeyCode[4]{
             KeyCode.N, KeyCode.Q,
@@ -283,7 +269,6 @@ public class Movement : MonoBehaviour
         };
         if (tileMap == null) { return; }
         if (holding)
->>>>>>> 629a31ae2ab6fc18f2aa608d3ba408601f8b9bab
         {
             DropHeldItem();
         }
@@ -302,15 +287,11 @@ public class Movement : MonoBehaviour
 
             if (interacting)
             {
-<<<<<<< HEAD
-                if (interactAktivne) interactingStation.Select();
-=======
                 if (interactAktivne)
                 {
                     interactingStation.Player1isTouching = isPlayerOne;
                     interactingStation.Select();
                 }
->>>>>>> 629a31ae2ab6fc18f2aa608d3ba408601f8b9bab
                 if (interactPustenie)
                 {
                     interactingStation.Player1isTouching = isPlayerOne;
@@ -369,13 +350,6 @@ public class Movement : MonoBehaviour
             bool interact = isPlayerOne ? Input.GetKeyDown(keycodes[0]) : Input.GetKeyDown(keycodes[1]);
             bool grab = isPlayerOne ? Input.GetKeyDown(keycodes[2]) : Input.GetKeyDown(keycodes[3]);
 
-<<<<<<< HEAD
-            places.Sort((a, b) =>
-            {
-                float da = (a.Item1 - px) * (a.Item1 - px) + (a.Item2 - pz) * (a.Item2 - pz);
-                float db = (b.Item1 - px) * (b.Item1 - px) + (b.Item2 - pz) * (b.Item2 - pz);
-                return da.CompareTo(db);
-=======
 
             if (!interact)
             {
@@ -399,7 +373,6 @@ public class Movement : MonoBehaviour
                 float dx = Mathf.Pow((float)x.Item1 - (float)px, 2f) + Mathf.Pow((float)x.Item2 - (float)pz, 2f);
                 float dz = Mathf.Pow((float)z.Item1 - (float)px, 2f) + Mathf.Pow((float)z.Item2 - (float)pz, 2f);
                 return dx.CompareTo(dz); // porovná floaty a vráti int
->>>>>>> 629a31ae2ab6fc18f2aa608d3ba408601f8b9bab
             });
 
             while (places.Count > 0)
@@ -429,10 +402,6 @@ public class Movement : MonoBehaviour
 
                 if (interact)
                 {
-<<<<<<< HEAD
-                    if (holding) { places.RemoveAt(0); continue; }
-
-=======
                   
                     if (holding)
                     {
@@ -440,7 +409,6 @@ public class Movement : MonoBehaviour
                         continue;
                     }
                    
->>>>>>> 629a31ae2ab6fc18f2aa608d3ba408601f8b9bab
                     if (st.hasOutputs)
                     {
                         Debug.Log("Outputy");
