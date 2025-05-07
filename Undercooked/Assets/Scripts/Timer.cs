@@ -7,7 +7,7 @@ public class Timer : MonoBehaviour
     //[SerializeField] private TextMeshProUGUI timerText;
     private bool isTimerRunning = true;
     [SerializeField] float sliderMaxValue = 30f; 
-    float elapsedTime = 0f;
+    public float elapsedTime = 0f;
 
     [SerializeField]public Slider mainSlider;
 
