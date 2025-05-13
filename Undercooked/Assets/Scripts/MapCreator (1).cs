@@ -9,7 +9,6 @@ public class MapCreator : MonoBehaviour
     public List<int> walkableTileIndices; // spoločný zoznam priechodných dlaždíc pre všetkých hráčov
     public (int, int)[] playerStartPositions; // počiatočné pozície hráčov (x, z)
     public GameObject playerPrefab;
-
     void Start()
     {
         tileMap = new int[,] {
@@ -18,7 +17,7 @@ public class MapCreator : MonoBehaviour
             {1,0,0,1},
             {1,2,2,1}
         };
-        
+
         walkableTileIndices = new List<int>() { 0 };
         playerStartPositions = new (int,int)[2] {
             (1,1),
@@ -43,7 +42,7 @@ public class MapCreator : MonoBehaviour
                 {
                     Vector3 position = new Vector3(x, 0, z); // každý tile je 1 unit od seba
                     stMap[x, z] = Instantiate(tilePrefabs[tileIndex], position, Quaternion.identity, transform);
-                }
+                    }
                 else
                 {
                     Debug.LogWarning($"Tile index {tileIndex} mimo rozsah tilePrefabs na ({x}, {z})");

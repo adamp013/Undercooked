@@ -413,7 +413,7 @@ MonoBehaviour:
   - {fileID: 907047992}
   - {fileID: 1568948699}
   - {fileID: 763354053}
-  walkableTileIndices: 00000000
+  walkableTileIndices: 0100000000000000
   playerPrefab: {fileID: 3899466762678697719, guid: 3bbe773fab07fa446a53481e0bbce835, type: 3}
 --- !u!1 &433965105
 GameObject:
@@ -567,17 +567,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &646739883 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5187274268007557700, guid: 6f948bd07f04a1747afafcfd74396d14, type: 3}
-  m_PrefabInstance: {fileID: 665021194}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &646739885 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6309160978851110910, guid: 6f948bd07f04a1747afafcfd74396d14, type: 3}
   m_PrefabInstance: {fileID: 665021194}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 646739883}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6e2f64a6f3edf642b7c6a027c11a370, type: 3}
@@ -773,8 +768,10 @@ MonoBehaviour:
   free: 1
   wheel: {fileID: 1338968268}
   timer: {fileID: 1605552672}
-  canvasTimer: {fileID: 1605552670}
+  targetImage: {fileID: 0}
   mj: {fileID: 8326087}
+  Player1isTouching: 0
+  hori: 0
 --- !u!4 &763354055 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7649510749295967474, guid: 1d2484aa2543fd945b9d4ddec0719af1, type: 3}
@@ -813,8 +810,10 @@ MonoBehaviour:
   free: 0
   wheel: {fileID: -1005304359179408586, guid: dd59290f0410c0248989802a5e87cddd, type: 3}
   timer: {fileID: 646739885}
-  canvasTimer: {fileID: 646739883}
+  targetImage: {fileID: 0}
   mj: {fileID: 8326087}
+  Player1isTouching: 0
+  hori: 0
 --- !u!4 &907047996 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4010297497165966578, guid: 6f948bd07f04a1747afafcfd74396d14, type: 3}
@@ -1118,17 +1117,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6660272720428604381, guid: dd59290f0410c0248989802a5e87cddd, type: 3}
   m_PrefabInstance: {fileID: 108480495}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1533696364 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4231365718628949342, guid: 826a6baa8f886d14e837202c5c8682a6, type: 3}
-  m_PrefabInstance: {fileID: 719009559}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1533696366 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3083442641763084516, guid: 826a6baa8f886d14e837202c5c8682a6, type: 3}
   m_PrefabInstance: {fileID: 719009559}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1533696364}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6e2f64a6f3edf642b7c6a027c11a370, type: 3}
@@ -1166,24 +1160,21 @@ MonoBehaviour:
   free: 1
   wheel: {fileID: 51485065}
   timer: {fileID: 1533696366}
-  canvasTimer: {fileID: 1533696364}
+  targetImage: {fileID: 0}
   mj: {fileID: 8326087}
+  Player1isTouching: 0
+  hori: 0
 --- !u!4 &1568948701 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3964465860195312126, guid: 826a6baa8f886d14e837202c5c8682a6, type: 3}
   m_PrefabInstance: {fileID: 719009559}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1605552670 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3505842672774164855, guid: 1d2484aa2543fd945b9d4ddec0719af1, type: 3}
-  m_PrefabInstance: {fileID: 976716442}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1605552672 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2365800869488510157, guid: 1d2484aa2543fd945b9d4ddec0719af1, type: 3}
   m_PrefabInstance: {fileID: 976716442}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1605552670}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6e2f64a6f3edf642b7c6a027c11a370, type: 3}
