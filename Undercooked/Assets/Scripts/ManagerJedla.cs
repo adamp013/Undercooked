@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class ManagerJedla : MonoBehaviour
 {
-    public List<Food> VratVysledokReceptu(Food jedlo, int stanica) //Output / dalsia forma
+    public List<Jedlo> VratVysledokReceptu(Jedlo jedlo, int stanica) //Output / dalsia forma
     {
         return jedlo.jedla;
     }
-    public bool ExistujeRecept(Food jedlo, int stanica) //ci sa da tam jebnut
+    public bool ExistujeRecept(Jedlo jedlo, int stanica) //ci sa da tam jebnut
     {
         return (stanica == jedlo.stanica);
     }
-    public float VratCenuJedla(Food jedlo) //cena
+    public float VratCenuJedla(Jedlo jedlo) //cena
     {
         return jedlo.cena;
     }

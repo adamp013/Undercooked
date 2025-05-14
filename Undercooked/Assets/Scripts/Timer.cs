@@ -5,19 +5,18 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
     //[SerializeField] private TextMeshProUGUI timerText;
-    private bool isTimerRunning = true;
-    public float sliderMaxValue = 30f; 
+    private bool isTimerRunning = false;
+    public float sliderMaxValue = 30f;
     public float elapsedTime = 0f;
+    public float sirka = 1f;
 
-    [SerializeField] public Image Image;
-
-    [SerializeField]public Slider mainSlider;
-
+    public GameObject slider;
     void Update()
     {
         if (isTimerRunning)
         {
             ElapsedTime();
+            SliderNastav(elapsedTime, sliderMaxValue);
         }
     }
 
@@ -26,14 +25,7 @@ public class Timer : MonoBehaviour
         elapsedTime += Time.deltaTime;
         if (elapsedTime > sliderMaxValue)
         {
-            mainSlider.value = sliderMaxValue;
-        }
-        else
-        {
-            int minutesT = Mathf.FloorToInt(elapsedTime / 60F);
-            int secondsT = Mathf.FloorToInt(elapsedTime % 60);
-            mainSlider.value = elapsedTime;
-            mainSlider.maxValue = sliderMaxValue;
+            elapsedTime = sliderMaxValue;
         }
     }
 
@@ -44,6 +36,15 @@ public class Timer : MonoBehaviour
 
     public void TimeResumed()
     {
-        isTimerRunning = true; 
+        isTimerRunning = true;
+    }
+    public void SliderNastav(float now, float max)
+    {
+        float pomer = (float)now / max;
+
+        float novaSirka = sirka * pomer;
+
+        slider.transform.localScale = new Vector3(novaSirka, slider.transform.localScale.y, slider.transform.localScale.z);
+        slider.transform.localPosition = new Vector3(-(sirka - novaSirka)/2, 0, 0);
     }
 }

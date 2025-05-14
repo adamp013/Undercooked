@@ -12,15 +12,14 @@ public class Stanica : MonoBehaviour
     public bool activne = false; // ci stanica pracuje
     public float time = 0f;
     public int typStanice;
-    public Food input;
-    public List<Food> output;
+    public Jedlo input;
+    public List<Jedlo> output;
     public bool hasInput = false;
     public bool hasOutput = false;
     public bool hasOutputs = false;
     public bool free = true;//ma outputy aj inputy na false
     public WheelScript wheel;
     public Timer timer;
-    public Image targetImage;
     public ManagerJedla mj;
     public bool Player1isTouching = false;
     public bool hori = false;
@@ -33,12 +32,13 @@ public class Stanica : MonoBehaviour
     {
         wheel.GenerateWheel(output);
     }
-    public Food EndSelect(bool isPlayerOne)
+    public Jedlo EndSelect(bool isPlayerOne)
     {
         float h = isPlayerOne ? Input.GetAxis("Horizontal") : Input.GetAxis("Horizontal2");
         float v = isPlayerOne ? Input.GetAxis("Vertical") : Input.GetAxis("Vertical2");
         int poradie = wheel.Choice(output.Count, h,v);
-        Food p = output[poradie];
+        Debug.Log(poradie);
+        Jedlo p = output[poradie];
         output.RemoveAt(poradie);
         if (output.Count == 1)
         {
@@ -50,9 +50,14 @@ public class Stanica : MonoBehaviour
     }
     public void Interact()
     {
-
-        Timer holder = targetImage.GetComponent<Timer>();
-        Debug.Log("Zapnut");timer.gameObject.SetActive(true);
+        if (timer != null)
+        {
+            timer.gameObject.SetActive(true);
+        }
+        else
+        {
+            return;
+        }
 
 
         time += Time.deltaTime;
@@ -60,10 +65,7 @@ public class Stanica : MonoBehaviour
         {
             if (activneInteractable)
             {
-                if (holder != null && holder.Image != null)
-                {
-                    holder.Image.color = Color.green; //SPRAV TO GREEN
-                }
+
             }
             else if (!canFire)
             {
@@ -87,22 +89,26 @@ public class Stanica : MonoBehaviour
         }
         else if (!activneInteractable) 
         {
-            Debug.Log("Zapnut");timer.gameObject.SetActive(true);
+
+            timer.gameObject.SetActive(true);
         }
     }
     public void StartInteract()
     {
+        if (timer != null)
+        {
+            return;
+        }
 
         if (canFire && time > fullTime)
-        {
-            timer.sliderMaxValue = timeZhorenie;
-        }
-        else
-        {
-            timer.sliderMaxValue = fullTime;
-        }
-        Debug.Log("funguj");
-        Debug.Log("Zapnut");timer.gameObject.SetActive(true);
+            {
+                timer.sliderMaxValue = timeZhorenie;
+            }
+            else
+            {
+                timer.sliderMaxValue = fullTime;
+            }
+        timer.gameObject.SetActive(true);
         timer.TimeResumed();
 
         if (!activneInteractable)
@@ -113,8 +119,7 @@ public class Stanica : MonoBehaviour
     }
     public void EndInteract()
     {
-        Debug.Log("koniec");
-        Debug.Log("vypnut");timer.gameObject.SetActive(false);
+        timer.gameObject.SetActive(false);
         if (activneInteractable)
         {
             if (time > fullTime)
@@ -128,7 +133,6 @@ public class Stanica : MonoBehaviour
         }
         else if (time < timeZhorenie)
         {
-            Debug.Log("varenie");
             output = mj.VratVysledokReceptu(input, typStanice);
             input = null;
             hasInput = false;
@@ -146,35 +150,96 @@ public class Stanica : MonoBehaviour
             }
             if (!canFire)
             {
-                Debug.Log("vypnut");
                 timer.gameObject.SetActive(false);
                 timer.TimeStopped();
             }
         }
         else if (canFire)
         {
-            Debug.Log("Hori");
-            output = new List<Food>();
+            output = new List<Jedlo>();
             hasOutput = false;
             hasOutputs = false;
             free = true;
         }
     }
-    public Food Grab()
+    public Jedlo Grab()
     {
-        if (hasOutput)
+        if (hasOutput && output.Count == 1)
         {
-            Food o = output[0];
-            output = new List<Food>();
+            Jedlo o = output[0];
+            output = new List<Jedlo>();
+            input = null;
+            stavRozlozenia = false;
             free = true;
             hasOutput = false;
             activne = false;
             return o;
         }
+        else if (stavRozlozenia)
+        {
+            if (output.Count == 1)
+            {
+                Jedlo o = output[0];
+                output = new List<Jedlo>();
+                input = null;
+                stavRozlozenia = false;
+                free = true;
+                hasOutput = false;
+                activne = false;
+                return o;
+            }
+            else
+            {
+                Jedlo o = input;
+                o.jedla = output;
+                output = new List<Jedlo>();
+                input = null;
+                stavRozlozenia = false;
+                free = true;
+                hasOutput = false;
+                activne = false;
+                return o;
+            }
+        }
         return null;
     }
-    public void Place(Food jedlo)
+    public void Place(Jedlo jedlo)
     {
+        if (Pult)
+        {
+            if (mj.ExistujeRecept(jedlo, 0))
+            {
+                stavRozlozenia = true;
+                if (mj.ExistujeRecept(jedlo, 0))
+                {
+                    stavRozlozenia = true;
+                    input = jedlo;
+                    output = jedlo.jedla;
+                    if (output.Count == 1)
+                    {
+                        hasOutput = true;
+                        hasOutputs = false;
+                    }
+                    else if (output.Count > 1)
+                    {
+                        hasOutputs = true;
+                        hasOutput = false;
+                    }
+                    hasInput = true;
+                    free = false;
+                }
+                return;
+            }
+        }
+        if (Belt)
+        {
+            if (cm != null)
+            {
+                float coins = mj.VratCenuJedla(jedlo);
+                cm.AddCoins(coins);
+                return;
+            }
+        }
         hasInput = true;
         input = jedlo;
         free = false;
@@ -205,6 +270,41 @@ public class Stanica : MonoBehaviour
         {
             hasOutputs = true;
             hasOutput = false;
+        }
+        ChildUpdate();
+    }
+    public bool ZakaznikovStol = false;
+    public bool Pult = false;
+    public bool Belt = false;
+    public List<Jedlo> menuZakaznika;//potrebne len pri stoleZakaznika
+    public CoinManager cm;
+    public bool stavRozlozenia = false;
+    public void ChildUpdate()
+    {
+        if (ZakaznikovStol)
+        {
+            if (free)
+            {
+                Jedlo noveJedlo = menuZakaznika[Random.Range(0, menuZakaznika.Count)];
+                if (mj.ExistujeRecept(noveJedlo, 0))
+                {
+                    stavRozlozenia = true;
+                    input = noveJedlo;
+                    output = noveJedlo.jedla;
+                    if (output.Count == 1)
+                    {
+                        hasOutput = true;
+                        hasOutputs = false;
+                    }
+                    else if (output.Count > 1)
+                    {
+                        hasOutputs = true;
+                        hasOutput = false;
+                    }
+                    hasInput = true;
+                    free = false;
+                }
+            }
         }
     }
 }

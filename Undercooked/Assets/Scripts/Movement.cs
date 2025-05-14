@@ -11,14 +11,14 @@ public class Movement : MonoBehaviour
     public float width = 0.9f;
     public bool interacting = false;
     public Stanica interactingStation;
-    public Food holdingFood;
+    public Jedlo holdingJedlo;
     public bool holding = false;
     public bool cooking = false;
     public int obs = 0;
 
-    public Transform holdPoint;
+    public Transform holder;
     private GameObject heldObject;
-    private Vector3 lastInputDirection = Vector3.forward;
+    public (float,float) lastInputDirection = (1f,0f);
 
     void Update()
     {
@@ -29,48 +29,49 @@ public class Movement : MonoBehaviour
 
         if (tileMap == null) return;
 
-        if (holding && Input.GetKeyDown(KeyCode.Backspace))
+        if (holding && heldObject == null)
         {
-            DropHeldItem();
+            heldObject = Instantiate(holdingJedlo.gameObject, holder);
+            heldObject.transform.localPosition = new Vector3(0, 0, 0);
+        }
+        else if (!holding && heldObject != null)
+        {
+            Destroy(heldObject);
+            heldObject = null;
         }
 
-        if (heldObject != null)
+        if (holding && Input.GetKeyDown(KeyCode.Backspace))
         {
-            heldObject.transform.position = holdPoint.position;
-            heldObject.transform.rotation = holdPoint.rotation;
+            //DropHeldItem();
         }
 
         if (interacting || cooking)
         {
             bool interactPustenie = isPlayerOne ? Input.GetKeyUp(keycodes[0]) : Input.GetKeyUp(keycodes[1]);
             bool interactAktivne = isPlayerOne ? Input.GetKey(keycodes[0]) : Input.GetKey(keycodes[1]);
-
             if (interacting)
             {
-                if (interactAktivne) interactingStation.Select();
+                if (interactAktivne)
+                {
+                    interactingStation.Select();
+                }
                 if (interactPustenie)
                 {
-                    holdingFood = interactingStation.EndSelect(isPlayerOne);
-                    holding = holdingFood != null;
-
-                    if (holding)
-                    {
-                        heldObject = Instantiate(holdingFood.gameObject, holdPoint.position, Quaternion.identity);
-                        heldObject.transform.SetParent(holdPoint);
-                    }
-
+                    holdingJedlo = interactingStation.EndSelect(isPlayerOne);
+                    holding = true;
                     interactingStation = null;
                     interacting = false;
                 }
             }
             else if (cooking)
             {
-                if (interactAktivne) interactingStation.Interact();
+                if (interactAktivne)
+                {
+                    interactingStation.Interact();
+                }
                 if (interactPustenie)
                 {
                     interactingStation.EndInteract();
-                    cooking = false;
-                    interactingStation = null;
                 }
             }
         }
@@ -84,9 +85,14 @@ public class Movement : MonoBehaviour
             Vector3 input = new Vector3(h, 0, v).normalized;
             Vector3 dir = input * speed * Time.deltaTime;
 
-            if (input != Vector3.zero)
+            if (input != Vector3.zero)//last input ked nikam nesmerujes
             {
-                lastInputDirection = input;
+                lastInputDirection = (h,v);
+            }
+            else
+            {
+                h = lastInputDirection.Item1;
+                v = lastInputDirection.Item2;
             }
 
             Vector3 move = GetAllowedMovement(dir);
@@ -96,6 +102,7 @@ public class Movement : MonoBehaviour
             List<(int, int)> places = new List<(int, int)>();
             int px = Mathf.RoundToInt(transform.position.x);
             int pz = Mathf.RoundToInt(transform.position.z);
+            
 
             if (h > buffer) { places.Add((1, 0)); if (v > buffer) places.Add((1, 1)); else if (v < -buffer) places.Add((1, -1)); }
             else if (h < -buffer) { places.Add((-1, 0)); if (v > buffer) places.Add((-1, 1)); else if (v < -buffer) places.Add((-1, -1)); }
@@ -112,6 +119,7 @@ public class Movement : MonoBehaviour
                 return da.CompareTo(db);
             });
 
+            //Debug.Log("Miesta:");
             while (places.Count > 0)
             {
                 int x = places[0].Item1 + px;
@@ -129,6 +137,7 @@ public class Movement : MonoBehaviour
                     places.RemoveAt(0);
                     continue;
                 }
+                //Debug.Log("M: x" + x + ", z" + z);
 
                 float dist = Vector3.Distance(transform.position, st.transform.position);
                 if (dist > 1.5f)
@@ -158,27 +167,20 @@ public class Movement : MonoBehaviour
                 }
                 else if (grab)
                 {
-                    if (st.hasOutput)
+                    Debug.Log("Grab: x" + x + ", z" + z);
+                    if ((st.hasOutput || (st.hasInput && st.stavRozlozenia)) && !holding)
                     {
-                        holdingFood = st.Grab();
-                        if (holdingFood != null)
+                        holdingJedlo = st.Grab();
+                        if (holdingJedlo != null)
                         {
                             holding = true;
-                            heldObject = Instantiate(holdingFood.gameObject, holdPoint.position, Quaternion.identity);
-                            heldObject.transform.SetParent(holdPoint);
                         }
                     }
-                    else if (!st.activne && st.free && holding && holdingFood != null)
+                    else if (!st.activne && st.free && holding && holdingJedlo != null)
                     {
-                        st.Place(holdingFood);
+                        st.Place(holdingJedlo);
                         holding = false;
-                        holdingFood = null;
-
-                        if (heldObject != null)
-                        {
-                            Destroy(heldObject);
-                            heldObject = null;
-                        }
+                        holdingJedlo = null;
                     }
                     break;
                 }
@@ -186,19 +188,6 @@ public class Movement : MonoBehaviour
                 places.RemoveAt(0);
             }
         }
-    }
-
-    void DropHeldItem()
-    {
-        if (heldObject != null)
-        {
-            heldObject.transform.SetParent(null);
-            heldObject.transform.position = transform.position + lastInputDirection.normalized;
-            heldObject = null;
-        }
-
-        holding = false;
-        holdingFood = null;
     }
 
     Vector3 GetAllowedMovement(Vector3 movementDelta)
