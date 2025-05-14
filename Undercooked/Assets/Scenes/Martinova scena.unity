@@ -119,7 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
-<<<<<<< Updated upstream
 --- !u!1001 &602745122
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -233,8 +232,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50d7d5da22ca1c5488c3d7c8680bdd62, type: 3}
-=======
->>>>>>> Stashed changes
 --- !u!1 &744188574
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,7 +353,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
-<<<<<<< Updated upstream
 --- !u!1001 &851214102
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -451,8 +447,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f948bd07f04a1747afafcfd74396d14, type: 3}
-=======
->>>>>>> Stashed changes
 --- !u!1 &1202387148
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,28 +517,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
-<<<<<<< Updated upstream
-=======
---- !u!114 &1212407691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1212407690}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c43df39f793637841a7bb9eebd62c7be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tilePrefabs:
-  - {fileID: 1611806867}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 5380076670709761164, guid: 826a6baa8f886d14e837202c5c8682a6, type: 3}
-  walkableTileIndices: 00000000
-  playerPrefab: {fileID: 3899466762678697719, guid: 3bbe773fab07fa446a53481e0bbce835, type: 3}
->>>>>>> Stashed changes
 --- !u!114 &1212407692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -752,3 +724,5 @@ SceneRoots:
   - {fileID: 744188577}
   - {fileID: 1212407693}
   - {fileID: 1202387150}
+  - {fileID: 851214102}
+  - {fileID: 602745122}
