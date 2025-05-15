@@ -5,17 +5,51 @@ public class MapCreator : MonoBehaviour
 {
     public List<GameObject> tilePrefabs; // prefabrikáty reprezentujúce rôzne typy dlaždíc (index = typ)
     public int[,] tileMap; // 2D pole indexov, napr. 0 = podlaha, 1 = stena
+    public int[,] rotationMap;
     public GameObject[,] stMap;
     public List<int> walkableTileIndices; // spoločný zoznam priechodných dlaždíc pre všetkých hráčov
     public (int, int)[] playerStartPositions; // počiatočné pozície hráčov (x, z)
     public GameObject playerPrefab;
+    public float scale;
     void Start()
     {
+        //0 - floor
+        //1 - pult
+        //2 - fridge
+        //3 - mixer
+        //4 - dryer
+        //5 - workbench
+        //6 - zakaznikov stol
+        //7 - belt
+        //potom vyzualne
+        //8 - stolicka zakaznika
         tileMap = new int[,] {
-            {1,1,2,1},
-            {1,0,0,3},
-            {1,0,0,1},
-            {1,2,2,1}
+            {1,1,3,3,1,1,1},
+            {1,0,0,0,0,0,1},
+            {2,0,1,5,1,0,4},
+            {2,0,0,0,0,0,4},
+            {1,1,1,0,1,1,1},
+            {0,0,0,0,0,0,0},
+            {0,6,0,6,0,6,0},
+            {0,0,0,0,0,0,0}
+        };
+        //tu je rotacia
+        //0-default dole, 1 vlavo, 2 hore, 3 pravo
+        /*
+            {0,0,0,0},
+            {3,0,0,1},
+            {3,0,0,1},
+            {0,2,2,0}
+        */
+        rotationMap = new int[,]{
+            {0,0,0,0,0,0,0},
+            {3,0,0,0,0,0,1},
+            {3,0,0,0,0,0,1},
+            {3,0,0,0,0,0,1},
+            {0,2,2,0,2,2,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0}
         };
 
         walkableTileIndices = new List<int>() { 0 };
@@ -32,6 +66,13 @@ public class MapCreator : MonoBehaviour
         int width = tileMap.GetLength(0);
         int height = tileMap.GetLength(1);
         stMap = new GameObject[width,height];
+        Quaternion[] rotacie = new Quaternion[4]
+        {
+            Quaternion.LookRotation(Vector3.forward),
+            Quaternion.LookRotation(Vector3.right),
+            Quaternion.LookRotation(Vector3.back),
+            Quaternion.LookRotation(Vector3.left)
+        };
 
         for (int x = 0; x < width; x++)
         {
@@ -40,9 +81,10 @@ public class MapCreator : MonoBehaviour
                 int tileIndex = tileMap[x, z];
                 if (tileIndex >= 0 && tileIndex < tilePrefabs.Count)
                 {
-                    Vector3 position = new Vector3(x, 0, z); // každý tile je 1 unit od seba
-                    stMap[x, z] = Instantiate(tilePrefabs[tileIndex], position, Quaternion.identity, transform);
-                    }
+                    Vector3 position = new Vector3(x, 0, z);
+                    Quaternion rot = rotacie[rotationMap[x,z]];
+                    stMap[x, z] = Instantiate(tilePrefabs[tileIndex], position * scale + transform.position, rot, transform);
+                }
                 else
                 {
                     Debug.LogWarning($"Tile index {tileIndex} mimo rozsah tilePrefabs na ({x}, {z})");
@@ -59,7 +101,7 @@ public class MapCreator : MonoBehaviour
             if (x >= 0 && x < tileMap.GetLength(0) && z >= 0 && z < tileMap.GetLength(1) && walkableTileIndices.Contains(tileMap[x, z]))
             {
                 Vector3 position = new Vector3(x, 0, z);
-                GameObject player = Instantiate(playerPrefab, position, Quaternion.identity);
+                GameObject player = Instantiate(playerPrefab, position * scale + transform.position, Quaternion.identity, transform);
 
                 Movement move = player.GetComponent<Movement>();
                 move.isPlayerOne = (i == 0);

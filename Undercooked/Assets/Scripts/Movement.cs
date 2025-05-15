@@ -15,6 +15,7 @@ public class Movement : MonoBehaviour
     public bool holding = false;
     public bool cooking = false;
     public int obs = 0;
+    public float scale;
 
     public Transform holdPoint;
     private GameObject heldObject;
@@ -84,13 +85,15 @@ public class Movement : MonoBehaviour
             Vector3 input = new Vector3(h, 0, v).normalized;
             Vector3 dir = input * speed * Time.deltaTime;
 
+            Debug.Log($"Input: {input}, Direction: {dir}");
+
             if (input != Vector3.zero)
             {
                 lastInputDirection = input;
             }
 
             Vector3 move = GetAllowedMovement(dir);
-            transform.position += move;
+            transform.position += move * scale;
 
             float buffer = 0.01f;
             List<(int, int)> places = new List<(int, int)>();
@@ -203,8 +206,10 @@ public class Movement : MonoBehaviour
 
     Vector3 GetAllowedMovement(Vector3 movementDelta)
     {
-        Vector3 pos = transform.position;
+        Vector3 pos = transform.localPosition;
         float halfWidth = width / 2f;
+
+        Debug.Log($"Position: {pos}, Movement Delta: {movementDelta}");
 
         Vector3[] cp = new Vector3[4];
         cp[0] = new Vector3(pos.x - halfWidth, 0, pos.z - halfWidth);
@@ -223,6 +228,8 @@ public class Movement : MonoBehaviour
             xBlocked = xBlocked || IsColliding(cp[i] + xMovement);
             zBlocked = zBlocked || IsColliding(cp[i] + zMovement);
         }
+
+        Debug.Log($"X Blocked: {xBlocked}, Z Blocked: {zBlocked}");
 
         return (!xBlocked ? xMovement : Vector3.zero) + (!zBlocked ? zMovement : Vector3.zero);
     }
