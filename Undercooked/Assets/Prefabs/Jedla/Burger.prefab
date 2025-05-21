@@ -816,7 +816,7 @@ MonoBehaviour:
   stanica: 1
   cena: 0
   jedla:
-  - {fileID: 0}
+  - {fileID: -4065297074284559847, guid: 02f8af8d6f7084111853afdbd506efd4, type: 3}
   img: {fileID: 0}
 --- !u!1 &6310975837739265944
 GameObject:
