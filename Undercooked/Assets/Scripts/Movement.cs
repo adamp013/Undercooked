@@ -47,13 +47,15 @@ public class Movement : MonoBehaviour
 
         if (interacting || cooking)
         {
-            bool interactPustenie = isPlayerOne ? Input.GetKeyUp(keycodes[0]) : Input.GetKeyUp(keycodes[1]);
-            bool interactAktivne = isPlayerOne ? Input.GetKey(keycodes[0]) : Input.GetKey(keycodes[1]);
+            Debug.Log("ach");
+            bool interactPustenie = isPlayerOne ? !Input.GetKey(keycodes[1]) : !Input.GetKey(keycodes[0]);
+            bool interactAktivne = isPlayerOne ? Input.GetKey(keycodes[1]) : Input.GetKey(keycodes[0]);
             if (interacting)
             {
                 if (interactAktivne)
                 {
                     interactingStation.Select();
+                    cooking = true;
                 }
                 if (interactPustenie)
                 {
@@ -61,6 +63,8 @@ public class Movement : MonoBehaviour
                     holding = true;
                     interactingStation = null;
                     interacting = false;
+                    cooking = false;
+                    Debug.Log("prve pustenioe");
                 }
             }
             else if (cooking)
@@ -69,9 +73,11 @@ public class Movement : MonoBehaviour
                 {
                     interactingStation.Interact();
                 }
-                if (interactPustenie)
+                else if (interactPustenie)
                 {
                     interactingStation.EndInteract();
+                    cooking = false;
+                    Debug.Log("cooking zrusene");
                 }
             }
         }

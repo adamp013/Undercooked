@@ -18,13 +18,13 @@ public class ManagerJedla : MonoBehaviour
     }
 
 
-    
+
     void Start()
     {
 
     }
     void Update()
     {
-        
+
     }
 }
