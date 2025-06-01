@@ -101,8 +101,8 @@ public class Stanica : MonoBehaviour
         {
             timer.sliderMaxValue = fullTime;
         }
-        Debug.Log("funguj");
-        Debug.Log("Zapnut");timer.gameObject.SetActive(true);
+        Debug.Log("pece");
+        timer.gameObject.SetActive(true);
         timer.TimeResumed();
 
         if (!activneInteractable)

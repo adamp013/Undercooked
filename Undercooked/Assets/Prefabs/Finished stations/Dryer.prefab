@@ -124,6 +124,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e2f64a6f3edf642b7c6a027c11a370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3729367071599223281 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8751450353700459251, guid: cd1ccfd7508220f43af1d1d87456c56c, type: 3}
+  m_PrefabInstance: {fileID: 5382428471529943810}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7940198758604645639 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2631081429674300933, guid: cd1ccfd7508220f43af1d1d87456c56c, type: 3}
@@ -226,15 +237,15 @@ MonoBehaviour:
   typStanice: 0
   input: {fileID: 0}
   output:
-  - {fileID: 1852693453377058199, guid: b80a7bd9ecf2ecd47933dbee9f9af829, type: 3}
+  - {fileID: 0}
   hasInput: 0
   hasOutput: 1
   hasOutputs: 0
   free: 0
   wheel: {fileID: -1005304359179408586, guid: dd59290f0410c0248989802a5e87cddd, type: 3}
   timer: {fileID: 1703918371476176184}
-  targetImage: {fileID: 0}
-  mj: {fileID: 0}
+  targetImage: {fileID: 3729367071599223281}
+  mj: {fileID: 5532398624316897478, guid: ccb39851f0821da44862242a465c14f0, type: 3}
   Player1isTouching: 0
   hori: 0
 --- !u!4 &8031192522372411064 stripped
