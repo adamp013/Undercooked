@@ -237,7 +237,7 @@ MonoBehaviour:
   typStanice: 0
   input: {fileID: 0}
   output:
-  - {fileID: 0}
+  - {fileID: 3718741061121397998, guid: 02f8af8d6f7084111853afdbd506efd4, type: 3}
   hasInput: 0
   hasOutput: 1
   hasOutputs: 0

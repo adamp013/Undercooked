@@ -268,7 +268,7 @@ MonoBehaviour:
   typStanice: 0
   input: {fileID: 0}
   output:
-  - {fileID: 0}
+  - {fileID: 3718741061121397998, guid: 02f8af8d6f7084111853afdbd506efd4, type: 3}
   hasInput: 0
   hasOutput: 1
   hasOutputs: 0
@@ -278,7 +278,7 @@ MonoBehaviour:
   targetImage: {fileID: 8027498846544107247}
   mj: {fileID: 5532398624316897478, guid: ccb39851f0821da44862242a465c14f0, type: 3}
   Player1isTouching: 0
-  hori: 1
+  hori: 0
 --- !u!4 &8874981733190970260 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3ecc250ee1b6b482695041f91ce5e1d3, type: 3}
