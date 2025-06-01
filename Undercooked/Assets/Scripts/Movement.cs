@@ -20,6 +20,7 @@ public class Movement : MonoBehaviour
     public Transform holdPoint;
     private GameObject heldObject;
     private Vector3 lastInputDirection = Vector3.forward;
+    private bool grab;
 
     void Update()
     {
@@ -85,8 +86,6 @@ public class Movement : MonoBehaviour
             Vector3 input = new Vector3(h, 0, v).normalized;
             Vector3 dir = input * speed * Time.deltaTime;
 
-            Debug.Log($"Input: {input}, Direction: {dir}");
-
             if (input != Vector3.zero)
             {
                 lastInputDirection = input;
@@ -97,16 +96,15 @@ public class Movement : MonoBehaviour
 
             float buffer = 0.01f;
             List<(int, int)> places = new List<(int, int)>();
-            int px = Mathf.RoundToInt(transform.position.x);
-            int pz = Mathf.RoundToInt(transform.position.z);
+            int px = Mathf.RoundToInt(transform.localPosition.x);
+            int pz = Mathf.RoundToInt(transform.localPosition.z);
 
             if (h > buffer) { places.Add((1, 0)); if (v > buffer) places.Add((1, 1)); else if (v < -buffer) places.Add((1, -1)); }
             else if (h < -buffer) { places.Add((-1, 0)); if (v > buffer) places.Add((-1, 1)); else if (v < -buffer) places.Add((-1, -1)); }
             if (v > buffer) places.Add((0, 1));
             else if (v < -buffer) places.Add((0, -1));
 
-            bool interact = isPlayerOne ? Input.GetKeyDown(keycodes[0]) : Input.GetKeyDown(keycodes[1]);
-            bool grab = isPlayerOne ? Input.GetKeyDown(keycodes[2]) : Input.GetKeyDown(keycodes[3]);
+            bool interact = isPlayerOne ? Input.GetKey(keycodes[0]) : Input.GetKey(keycodes[1]);
 
             places.Sort((a, b) =>
             {
@@ -114,12 +112,10 @@ public class Movement : MonoBehaviour
                 float db = (b.Item1 - px) * (b.Item1 - px) + (b.Item2 - pz) * (b.Item2 - pz);
                 return da.CompareTo(db);
             });
-
-            while (places.Count > 0)
+            while (places.Count > 0) //stanica na ktoru sa hrac pozera
             {
                 int x = places[0].Item1 + px;
                 int z = places[0].Item2 + pz;
-
                 if (x < 0 || z < 0 || x >= stMap.GetLength(0) || z >= stMap.GetLength(1))
                 {
                     places.RemoveAt(0);
@@ -133,12 +129,13 @@ public class Movement : MonoBehaviour
                     continue;
                 }
 
-                float dist = Vector3.Distance(transform.position, st.transform.position);
+                float dist = Vector3.Distance(transform.localPosition, st.transform.localPosition);
                 if (dist > 1.5f)
                 {
                     places.RemoveAt(0);
                     continue;
                 }
+                grab = isPlayerOne ? Input.GetKeyDown(keycodes[2]) : Input.GetKeyDown(keycodes[3]); //grab je true ked je drzane e(z nejakeho dovodu polovicu casu)
 
                 if (interact)
                 {
@@ -185,7 +182,6 @@ public class Movement : MonoBehaviour
                     }
                     break;
                 }
-
                 places.RemoveAt(0);
             }
         }
@@ -209,8 +205,6 @@ public class Movement : MonoBehaviour
         Vector3 pos = transform.localPosition;
         float halfWidth = width / 2f;
 
-        Debug.Log($"Position: {pos}, Movement Delta: {movementDelta}");
-
         Vector3[] cp = new Vector3[4];
         cp[0] = new Vector3(pos.x - halfWidth, 0, pos.z - halfWidth);
         cp[1] = new Vector3(pos.x + halfWidth, 0, pos.z - halfWidth);
@@ -228,8 +222,6 @@ public class Movement : MonoBehaviour
             xBlocked = xBlocked || IsColliding(cp[i] + xMovement);
             zBlocked = zBlocked || IsColliding(cp[i] + zMovement);
         }
-
-        Debug.Log($"X Blocked: {xBlocked}, Z Blocked: {zBlocked}");
 
         return (!xBlocked ? xMovement : Vector3.zero) + (!zBlocked ? zMovement : Vector3.zero);
     }

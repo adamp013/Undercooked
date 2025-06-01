@@ -276,7 +276,7 @@ MonoBehaviour:
   wheel: {fileID: -1005304359179408586, guid: dd59290f0410c0248989802a5e87cddd, type: 3}
   timer: {fileID: 3164240048726496750}
   targetImage: {fileID: 8027498846544107247}
-  mj: {fileID: 0}
+  mj: {fileID: 5532398624316897478, guid: ccb39851f0821da44862242a465c14f0, type: 3}
   Player1isTouching: 0
   hori: 0
 --- !u!4 &8874981733190970260 stripped

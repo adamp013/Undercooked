@@ -4036,12 +4036,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilePrefabs:
-  - {fileID: 4390060754268026440, guid: 6f948bd07f04a1747afafcfd74396d14, type: 3}
+  - {fileID: 391522016}
   - {fileID: 5434423430773155041, guid: ee8478ba1ea1b3e4badec3f5586c2fc3, type: 3}
   - {fileID: 3496335082169359387, guid: 6fc95e16b5e48cf489eedf4601960186, type: 3}
-  - {fileID: 391522016}
+  - {fileID: 3496335082169359387, guid: 6fc95e16b5e48cf489eedf4601960186, type: 3}
+  - {fileID: 5434423430773155041, guid: ee8478ba1ea1b3e4badec3f5586c2fc3, type: 3}
+  - {fileID: 5700201821348543618, guid: 50d7d5da22ca1c5488c3d7c8680bdd62, type: 3}
+  - {fileID: 6673916613187788057, guid: eae4f2c847fc54be08980940a0e84f29, type: 3}
+  - {fileID: 8883927393543035996, guid: 32607a5f1989adf4f92be5c1ff9c49c6, type: 3}
+  - {fileID: 5434423430773155041, guid: ee8478ba1ea1b3e4badec3f5586c2fc3, type: 3}
   walkableTileIndices: 00000000
   playerPrefab: {fileID: 3899466762678697719, guid: 3bbe773fab07fa446a53481e0bbce835, type: 3}
+  scale: 20
 --- !u!114 &1555125879
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -981,6 +981,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2728819676642669154}
+  - component: {fileID: 3718741061121397998}
   m_Layer: 0
   m_Name: Fries
   m_TagString: Untagged
@@ -1089,6 +1090,25 @@ Transform:
   - {fileID: 3797272752468694710}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3718741061121397998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7264988723222810231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf542586112f954db653702e9a5a8a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nazov: hranolky
+  index: 5
+  stanica: 5
+  cena: 5
+  jedla:
+  - {fileID: 1277878800894373286, guid: 36245a7c462a86c4aa2b503bf90f2064, type: 3}
+  img: {fileID: -1085882742, guid: 39247f0b09064024493d24f07dc1fb26, type: 3}
 --- !u!1 &7584926103570072327
 GameObject:
   m_ObjectHideFlags: 0
