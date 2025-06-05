@@ -88,6 +88,8 @@ public class Movement : MonoBehaviour
 
             if (input != Vector3.zero)
             {
+                Quaternion targetRotation = Quaternion.LookRotation(input);
+                transform.rotation = Quaternion.Euler(0, targetRotation.eulerAngles.y + 90, 0);
                 lastInputDirection = input;
             }
 
