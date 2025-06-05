@@ -1,9 +1,10 @@
-using UnityEngine;
+ using UnityEngine;
 using System.Collections.Generic;
 
 public class MapCreator : MonoBehaviour
 {
     public List<GameObject> tilePrefabs; // prefabrikáty reprezentujúce rôzne typy dlaždíc (index = typ)
+    public GameObject floor;
     public int[,] tileMap; // 2D pole indexov, napr. 0 = podlaha, 1 = stena
     public int[,] rotationMap;
     public GameObject[,] stMap;
@@ -34,22 +35,17 @@ public class MapCreator : MonoBehaviour
             {0,0,0,0,0,0,0}
         };
         //tu je rotacia
-        //0-default dole, 1 vlavo, 2 hore, 3 pravo
-        /*
-            {0,0,0,0},
-            {3,0,0,1},
-            {3,0,0,1},
-            {0,2,2,0}
-        */
+        //0-default dopredu, 1 VPRAVO, 2 dole, 3 vlavo
+        
         rotationMap = new int[,]{
-            {0,0,0,0,0,0,0},
-            {3,0,0,0,0,0,1},
-            {3,0,0,0,0,0,1},
-            {3,0,0,0,0,0,1},
-            {0,2,2,0,2,2,0},
-            {0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0}
+            {1,1,1,1,1,1,1},
+            {0,0,0,0,0,0,2},
+            {0,0,3,1,3,0,2},
+            {0,0,0,0,0,0,2},
+            {0,3,3,0,3,3,0},
+            {0,0,0,0,0,0,2},
+            {0,0,0,0,0,0,2},
+            {3,3,3,3,3,3,3}
         };
 
         walkableTileIndices = new List<int>() { 0 };
@@ -91,6 +87,11 @@ public class MapCreator : MonoBehaviour
                 }
             }
         }
+        Vector3 centerPosition = new Vector3((width - 1) / 2f, -0.67f, (height - 1) / 2f) * scale + transform.position;
+
+        // Instantiate floor at that position
+        Instantiate(floor, centerPosition, Quaternion.identity, transform);
+
     }
 
     void SpawnPlayers()
