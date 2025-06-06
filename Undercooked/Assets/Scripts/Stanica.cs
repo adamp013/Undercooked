@@ -31,6 +31,7 @@ public class Stanica : MonoBehaviour
     public GameObject jedloPlaceholder;
     public TMP_Text peneziLabel;
     private int penezi;
+    public int potrebnePeniaze = 1;
 
     public void Select()
     {
@@ -232,6 +233,10 @@ public class Stanica : MonoBehaviour
             {
                 penezi += mj.VratCenuJedla(jedlo);
                 peneziLabel.text = penezi.ToString() + " kačiek";
+                if (penezi >= potrebnePeniaze)
+                {
+                    GameManager.Instance.gt.Finish();
+                }
             }
         }
             return true;
