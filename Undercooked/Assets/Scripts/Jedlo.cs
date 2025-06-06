@@ -7,7 +7,7 @@ public class Food : MonoBehaviour
     public string nazov;
     public int index;
     public int stanica;
-    public float cena;
+    public int cena;
     public List<Food> jedla;
     public Sprite img;
     void Start()

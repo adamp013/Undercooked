@@ -265,7 +265,7 @@ MonoBehaviour:
   activneInteractable: 0
   activne: 0
   time: 0
-  typStanice: 0
+  typStanice: 2
   input: {fileID: 0}
   output:
   - {fileID: 3718741061121397998, guid: 02f8af8d6f7084111853afdbd506efd4, type: 3}

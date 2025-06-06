@@ -24,27 +24,27 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        KeyCode[] keycodes = new KeyCode[4] {
+        KeyCode[] keycodes = new KeyCode[4] { //interact keybinds
             KeyCode.N, KeyCode.Q,
             KeyCode.M, KeyCode.E
         };
 
         if (tileMap == null) return;
 
-        if (holding && Input.GetKeyDown(KeyCode.Backspace))
+        if (holding && Input.GetKeyDown(KeyCode.Backspace)) //drop
         {
             DropHeldItem();
         }
 
-        if (heldObject != null)
+        if (heldObject != null) //holdpoint
         {
             heldObject.transform.position = holdPoint.position;
             heldObject.transform.rotation = holdPoint.rotation;
         }
 
-        if (interacting || cooking)
+        if (interacting || cooking) //ked vari
         {
-            bool interactPustenie = isPlayerOne ? Input.GetKeyUp(keycodes[0]) : Input.GetKeyUp(keycodes[1]);
+            bool interactPustenie = isPlayerOne ? Input.GetKeyUp(keycodes[0]) : Input.GetKeyUp(keycodes[1]); //ci drzi alebo nie
             bool interactAktivne = isPlayerOne ? Input.GetKey(keycodes[0]) : Input.GetKey(keycodes[1]);
 
             if (interacting)
@@ -78,7 +78,7 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            obs = tileMap.GetLength(0) + tileMap.GetLength(1);
+            obs = tileMap.GetLength(0) + tileMap.GetLength(1); //pohyb a urcovanie stanic
 
             float h = isPlayerOne ? Input.GetAxis("Horizontal") : Input.GetAxis("Horizontal2");
             float v = isPlayerOne ? Input.GetAxis("Vertical") : Input.GetAxis("Vertical2");
@@ -106,7 +106,7 @@ public class Movement : MonoBehaviour
             if (v > buffer) places.Add((0, 1));
             else if (v < -buffer) places.Add((0, -1));
 
-            bool interact = isPlayerOne ? Input.GetKey(keycodes[0]) : Input.GetKey(keycodes[1]);
+            bool interact = isPlayerOne ? Input.GetKey(keycodes[0]) : Input.GetKey(keycodes[1]); //ci interaguje
 
             places.Sort((a, b) =>
             {
@@ -139,9 +139,14 @@ public class Movement : MonoBehaviour
                 }
                 grab = isPlayerOne ? Input.GetKeyDown(keycodes[2]) : Input.GetKeyDown(keycodes[3]); //grab je true ked je drzane e(z nejakeho dovodu polovicu casu)
 
-                if (interact)
+                if (interact) //robenie premennych ohladom interakcii a koleso
                 {
                     if (holding) { places.RemoveAt(0); continue; }
+
+                    if (st.belt || st.pult)
+                    {
+                        break;
+                    }
 
                     if (st.hasOutputs)
                     {
@@ -150,7 +155,7 @@ public class Movement : MonoBehaviour
                         interactingStation = st;
                         break;
                     }
-                    else if (st.activneInteractable && !st.activne && st.hasInput)
+                    else if (st.activneInteractable && !st.activne && st.hasInput) //activneInteractible je ze sa robi automaticky
                     {
                         cooking = true;
                         st.StartInteract();
@@ -158,7 +163,7 @@ public class Movement : MonoBehaviour
                         break;
                     }
                 }
-                else if (grab)
+                else if (grab) //grabovanie
                 {
                     if (st.hasOutput)
                     {
@@ -166,13 +171,16 @@ public class Movement : MonoBehaviour
                         if (holdingFood != null)
                         {
                             holding = true;
-                            heldObject = Instantiate(holdingFood.gameObject, holdPoint.position, Quaternion.identity);
+                            heldObject = Instantiate(holdingFood.gameObject, holdPoint.position, Quaternion.identity); //hold
                             heldObject.transform.SetParent(holdPoint);
                         }
                     }
-                    else if (!st.activne && st.free && holding && holdingFood != null)
+                    else if (!st.activne && st.free && holding && holdingFood != null) //pokladanie jedla
                     {
-                        st.Place(holdingFood);
+                        if (!st.Place(holdingFood))
+                        {
+                            break;
+                        }
                         holding = false;
                         holdingFood = null;
 

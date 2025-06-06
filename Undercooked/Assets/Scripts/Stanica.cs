@@ -1,7 +1,8 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Stanica : MonoBehaviour
 {
@@ -24,6 +25,12 @@ public class Stanica : MonoBehaviour
     public ManagerJedla mj;
     public bool Player1isTouching = false;
     public bool hori = false;
+    public bool belt = false;
+    public bool pult = false;
+    public Transform stanicaHolder;
+    public GameObject jedloPlaceholder;
+    public TMP_Text peneziLabel;
+    private int penezi;
 
     public void Select()
     {
@@ -50,9 +57,7 @@ public class Stanica : MonoBehaviour
     }
     public void Interact()
     {
-
-        Timer holder = targetImage.GetComponent<Timer>();
-        Debug.Log("Zapnut");timer.gameObject.SetActive(true);
+        Timer holder = targetImage.GetComponent<Timer>();;timer.gameObject.SetActive(true);
 
 
         time += Time.deltaTime;
@@ -87,7 +92,7 @@ public class Stanica : MonoBehaviour
         }
         else if (!activneInteractable) 
         {
-            Debug.Log("Zapnut");timer.gameObject.SetActive(true);
+            timer.gameObject.SetActive(true);
         }
     }
     public void StartInteract()
@@ -101,7 +106,6 @@ public class Stanica : MonoBehaviour
         {
             timer.sliderMaxValue = fullTime;
         }
-        Debug.Log("pece");
         timer.gameObject.SetActive(true);
         timer.TimeResumed();
 
@@ -113,8 +117,8 @@ public class Stanica : MonoBehaviour
     }
     public void EndInteract()
     {
-        Debug.Log("koniec");
-        Debug.Log("vypnut");timer.gameObject.SetActive(false);
+
+        timer.gameObject.SetActive(false);
         if (activneInteractable)
         {
             if (time > fullTime)
@@ -128,7 +132,6 @@ public class Stanica : MonoBehaviour
         }
         else if (time < timeZhorenie)
         {
-            Debug.Log("varenie");
             output = mj.VratVysledokReceptu(input, typStanice);
             input = null;
             hasInput = false;
@@ -146,14 +149,12 @@ public class Stanica : MonoBehaviour
             }
             if (!canFire)
             {
-                Debug.Log("vypnut");
                 timer.gameObject.SetActive(false);
                 timer.TimeStopped();
             }
         }
         else if (canFire)
         {
-            Debug.Log("Hori");
             output = new List<Food>();
             hasOutput = false;
             hasOutputs = false;
@@ -169,24 +170,52 @@ public class Stanica : MonoBehaviour
             free = true;
             hasOutput = false;
             activne = false;
+            if (jedloPlaceholder != null)
+            {
+                Destroy(jedloPlaceholder);
+            }
             return o;
         }
         return null;
     }
-    public void Place(Food jedlo)
+    public bool Place(Food jedlo)
     {
-        hasInput = true;
-        input = jedlo;
-        free = false;
-        if (!activneInteractable)
+        if (!mj.ExistujeRecept(jedlo, typStanice)) //ci ide do stanice
         {
-            StartInteract();
+            return false;
         }
-        else
+        if (typStanice != 7 && typStanice != 1)
         {
-            timer.elapsedTime = 0f;
-            timer.TimeStopped();
+            hasInput = true;
+            input = jedlo;
+            free = false;
+            if (!activneInteractable)
+            {
+                StartInteract();
+            }
+            else
+            {
+                timer.elapsedTime = 0f;
+                timer.TimeStopped();
+            }
         }
+        else //ak je pult alebo belt
+        {
+            if (typStanice == 1 || typStanice == 2)
+            {
+                hasOutput = true;
+                output.Add(jedlo);
+                free = false;
+                jedloPlaceholder = Instantiate(jedlo.gameObject, stanicaHolder.position, Quaternion.identity);
+                jedloPlaceholder.transform.SetParent(stanicaHolder);
+            }
+            else if (typStanice == 7)
+            {
+                penezi += mj.VratCenuJedla(jedlo);
+                peneziLabel.text = penezi.ToString() + " kačiek";
+            }
+        }
+            return true;
     }
 
     void Update()

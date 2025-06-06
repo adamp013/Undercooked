@@ -102,7 +102,7 @@ MonoBehaviour:
   activneInteractable: 1
   activne: 0
   time: 0
-  typStanice: 0
+  typStanice: 5
   input: {fileID: 0}
   output: []
   hasInput: 0

@@ -10,9 +10,13 @@ public class ManagerJedla : MonoBehaviour
     }
     public bool ExistujeRecept(Food jedlo, int stanica) //ci sa da tam jebnut
     {
+        if (stanica == 1 || stanica == 7)
+        {
+            return true;
+        }
         return (stanica == jedlo.stanica);
     }
-    public float VratCenuJedla(Food jedlo) //cena
+    public int VratCenuJedla(Food jedlo) //cena
     {
         return jedlo.cena;
     }

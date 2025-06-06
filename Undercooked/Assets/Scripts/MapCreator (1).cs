@@ -25,7 +25,7 @@ public class MapCreator : MonoBehaviour
         //potom vyzualne
         //8 - stolicka zakaznika
         tileMap = new int[,] {
-            {1,1,3,3,1,1,1},
+            {1,1,3,3,1,7,1},
             {1,0,0,0,0,0,1},
             {2,0,1,5,1,0,4},
             {2,0,0,0,0,0,4},
@@ -80,6 +80,12 @@ public class MapCreator : MonoBehaviour
                     Vector3 position = new Vector3(x, 0, z);
                     Quaternion rot = rotacie[rotationMap[x,z]];
                     stMap[x, z] = Instantiate(tilePrefabs[tileIndex], position * scale + transform.position, rot, transform);
+                    Stanica st = stMap[x,z].GetComponent<Stanica>();
+                    if (st != null && st.output != null && st.output.Count > 0 && st.stanicaHolder != null)
+                    {
+                        GameObject jedloInstance = Instantiate(st.output[0].gameObject, st.stanicaHolder.position, Quaternion.identity);
+                        jedloInstance.transform.SetParent(st.stanicaHolder);
+                    }
                 }
                 else
                 {

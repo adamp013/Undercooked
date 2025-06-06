@@ -30,6 +30,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 2260706530335269256}
   - {fileID: 8034106336287983518}
   - {fileID: 4980527725134000995}
   m_Father: {fileID: 0}
@@ -52,19 +53,56 @@ MonoBehaviour:
   activneInteractable: 1
   activne: 0
   time: 0
-  typStanice: 0
+  typStanice: 6
   input: {fileID: 0}
-  output: []
+  output:
+  - {fileID: 3718741061121397998, guid: 02f8af8d6f7084111853afdbd506efd4, type: 3}
   hasInput: 0
-  hasOutput: 0
+  hasOutput: 1
   hasOutputs: 0
-  free: 1
+  free: 0
   wheel: {fileID: -1005304359179408586, guid: dd59290f0410c0248989802a5e87cddd, type: 3}
   timer: {fileID: 1651177490536783777}
   targetImage: {fileID: 3643128430737507176}
   mj: {fileID: 5532398624316897478, guid: ccb39851f0821da44862242a465c14f0, type: 3}
   Player1isTouching: 0
   hori: 0
+  belt: 0
+  pult: 0
+  stanicaHolder: {fileID: 2260706530335269256}
+  jedloPlaceholder: {fileID: 0}
+  peneziLabel: {fileID: 0}
+--- !u!1 &6503098382286555309
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2260706530335269256}
+  m_Layer: 0
+  m_Name: holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2260706530335269256
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6503098382286555309}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.023, z: 0}
+  m_LocalScale: {x: 0.6666667, y: 0.6666667, z: 0.6666667}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4525048096120845236}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1748619133695747598
 PrefabInstance:
   m_ObjectHideFlags: 0
