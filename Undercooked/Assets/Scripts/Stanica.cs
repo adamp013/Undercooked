@@ -31,7 +31,7 @@ public class Stanica : MonoBehaviour
     public GameObject jedloPlaceholder;
     public TMP_Text peneziLabel;
     private int penezi;
-    public int potrebnePeniaze = 1;
+    public int potrebnePeniaze = 15;
 
     public void Select()
     {

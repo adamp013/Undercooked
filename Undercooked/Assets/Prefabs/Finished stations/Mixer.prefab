@@ -50,7 +50,7 @@ MonoBehaviour:
   fullTime: 5
   timeZhorenie: 15
   canFire: 0
-  activneInteractable: 1
+  activneInteractable: 0
   activne: 0
   time: 0
   typStanice: 3
@@ -66,6 +66,12 @@ MonoBehaviour:
   mj: {fileID: 5532398624316897478, guid: ccb39851f0821da44862242a465c14f0, type: 3}
   Player1isTouching: 0
   hori: 0
+  belt: 0
+  pult: 0
+  stanicaHolder: {fileID: 0}
+  jedloPlaceholder: {fileID: 0}
+  peneziLabel: {fileID: 0}
+  potrebnePeniaze: 0
 --- !u!1001 &2774611700721030463
 PrefabInstance:
   m_ObjectHideFlags: 0
