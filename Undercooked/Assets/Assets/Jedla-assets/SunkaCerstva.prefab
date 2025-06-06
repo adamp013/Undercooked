@@ -48,7 +48,7 @@ MonoBehaviour:
   nazov: fresh meat
   index: 8
   stanica: -1
-  cena: 8
+  cena: 3
   jedla: []
   img: {fileID: -11535059, guid: 3ebb8812aed4f5346b6e2b23dfaa7f42, type: 3}
 --- !u!1001 &5263447829421208183
@@ -65,15 +65,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3402286997658842822, guid: f9e19ae4f95a843249f8643e40a8c472, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.56736
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3402286997658842822, guid: f9e19ae4f95a843249f8643e40a8c472, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5628764
+      value: 9.920975
       objectReference: {fileID: 0}
     - target: {fileID: 3402286997658842822, guid: f9e19ae4f95a843249f8643e40a8c472, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.52429
+      value: 9.24087
       objectReference: {fileID: 0}
     - target: {fileID: 3402286997658842822, guid: f9e19ae4f95a843249f8643e40a8c472, type: 3}
       propertyPath: m_LocalPosition.x
@@ -114,6 +114,10 @@ PrefabInstance:
     - target: {fileID: 3402286997658842822, guid: f9e19ae4f95a843249f8643e40a8c472, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3402286997658842822, guid: f9e19ae4f95a843249f8643e40a8c472, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

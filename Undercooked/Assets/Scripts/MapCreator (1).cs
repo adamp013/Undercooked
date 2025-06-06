@@ -12,6 +12,7 @@ public class MapCreator : MonoBehaviour
     public (int, int)[] playerStartPositions; // počiatočné pozície hráčov (x, z)
     public GameObject playerPrefab;
     public float scale;
+    
     void Start()
     {
         //0 - floor
@@ -83,8 +84,10 @@ public class MapCreator : MonoBehaviour
                     Stanica st = stMap[x,z].GetComponent<Stanica>();
                     if (st != null && st.output != null && st.output.Count > 0 && st.stanicaHolder != null)
                     {
-                        GameObject jedloInstance = Instantiate(st.output[0].gameObject, st.stanicaHolder.position, Quaternion.identity);
-                        jedloInstance.transform.SetParent(st.stanicaHolder);
+                        st.StartGame();
+                        /*st.jedloPlaceholder = Instantiate(st.output[0].gameObject, st.stanicaHolder.position, Quaternion.identity);
+                        st.jedloPlaceholder.transform.SetParent(st.stanicaHolder);
+                        st.output.AddRange(mj.VratVysledokReceptu(output[0]));*/
                     }
                 }
                 else

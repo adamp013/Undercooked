@@ -10,6 +10,7 @@ public class Food : MonoBehaviour
     public int cena;
     public List<Food> jedla;
     public Sprite img;
+    public bool rozlozitelne;
     void Start()
     {
         

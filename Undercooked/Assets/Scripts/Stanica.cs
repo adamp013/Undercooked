@@ -125,14 +125,14 @@ public class Stanica : MonoBehaviour
             {
                 hasInput = false;
                 activne = false;
-                output = mj.VratVysledokReceptu(input, typStanice);
+                output = mj.VratVysledokReceptu(input);
                 input = null;
             }
             timer.TimeStopped();
         }
         else if (time < timeZhorenie)
         {
-            output = mj.VratVysledokReceptu(input, typStanice);
+            output = mj.VratVysledokReceptu(input);
             input = null;
             hasInput = false;
             if (output.Count == 1)
@@ -163,20 +163,38 @@ public class Stanica : MonoBehaviour
     }
     public Food Grab()
     {
-        if (hasOutput)
+        Food o;
+        if (hasOutput) //ked ma jeden
         {
-            Food o = output[0];
+            o = output[0];
             output = new List<Food>();
             free = true;
             hasOutput = false;
             activne = false;
-            if (jedloPlaceholder != null)
-            {
-                Destroy(jedloPlaceholder);
-            }
-            return o;
         }
-        return null;
+        else  //ked ma viacero
+        {
+            //StartSelect();
+            if (output[0].rozlozitelne)
+            { 
+            o = output[1];
+            }
+            else
+            {
+                o = output[0];
+                hasOutputs = false;
+                free = true;
+            }
+         
+            output.Remove(o);
+        }
+
+        if (jedloPlaceholder != null && output.Count <= 1)
+        {
+            Destroy(jedloPlaceholder);
+            output = new List<Food>();
+        }
+        return o;
     }
     public bool Place(Food jedlo)
     {
@@ -184,7 +202,7 @@ public class Stanica : MonoBehaviour
         {
             return false;
         }
-        if (typStanice != 7 && typStanice != 1)
+        if (typStanice != 7 && typStanice != 1 && typStanice != 6)
         {
             hasInput = true;
             input = jedlo;
@@ -201,10 +219,11 @@ public class Stanica : MonoBehaviour
         }
         else //ak je pult alebo belt
         {
-            if (typStanice == 1 || typStanice == 2)
+            if (typStanice == 1 || typStanice == 6)
             {
                 hasOutput = true;
                 output.Add(jedlo);
+                output.AddRange(mj.VratVysledokReceptu(jedlo));
                 free = false;
                 jedloPlaceholder = Instantiate(jedlo.gameObject, stanicaHolder.position, Quaternion.identity);
                 jedloPlaceholder.transform.SetParent(stanicaHolder);
@@ -216,6 +235,13 @@ public class Stanica : MonoBehaviour
             }
         }
             return true;
+    }
+
+    public void StartGame()
+    {
+        jedloPlaceholder = Instantiate(output[0].gameObject, stanicaHolder.position, Quaternion.identity);
+        jedloPlaceholder.transform.SetParent(stanicaHolder);
+        output.AddRange(mj.VratVysledokReceptu(output[0]));
     }
 
     void Update()

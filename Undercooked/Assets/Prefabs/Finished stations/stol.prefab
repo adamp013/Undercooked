@@ -56,7 +56,7 @@ MonoBehaviour:
   typStanice: 6
   input: {fileID: 0}
   output:
-  - {fileID: 3718741061121397998, guid: 02f8af8d6f7084111853afdbd506efd4, type: 3}
+  - {fileID: -429564079537259896, guid: ee733be202c4c44ee9a577fc1f7d1fe2, type: 3}
   hasInput: 0
   hasOutput: 1
   hasOutputs: 0

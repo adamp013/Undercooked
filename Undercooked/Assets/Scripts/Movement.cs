@@ -137,8 +137,8 @@ public class Movement : MonoBehaviour
                     places.RemoveAt(0);
                     continue;
                 }
+                
                 grab = isPlayerOne ? Input.GetKeyDown(keycodes[2]) : Input.GetKeyDown(keycodes[3]); //grab je true ked je drzane e(z nejakeho dovodu polovicu casu)
-
                 if (interact) //robenie premennych ohladom interakcii a koleso
                 {
                     if (holding) { places.RemoveAt(0); continue; }
@@ -165,14 +165,17 @@ public class Movement : MonoBehaviour
                 }
                 else if (grab) //grabovanie
                 {
-                    if (st.hasOutput)
+                    if (st.hasOutput || st.hasOutputs)
                     {
-                        holdingFood = st.Grab();
-                        if (holdingFood != null)
+                        if (!holding)
                         {
-                            holding = true;
-                            heldObject = Instantiate(holdingFood.gameObject, holdPoint.position, Quaternion.identity); //hold
-                            heldObject.transform.SetParent(holdPoint);
+                            holdingFood = st.Grab();
+                            if (holdingFood != null)
+                            {
+                                holding = true;
+                                heldObject = Instantiate(holdingFood.gameObject, holdPoint.position, Quaternion.identity); //hold
+                                heldObject.transform.SetParent(holdPoint);
+                            }
                         }
                     }
                     else if (!st.activne && st.free && holding && holdingFood != null) //pokladanie jedla

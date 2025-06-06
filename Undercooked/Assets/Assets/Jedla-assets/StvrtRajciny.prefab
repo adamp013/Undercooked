@@ -27,8 +27,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 9054702197356478680}
   m_Father: {fileID: 0}
@@ -47,8 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nazov: tomatoe quarter
   index: 10
-  stanica: 1
-  cena: 5
+  stanica: 5
+  cena: 1
   jedla:
   - {fileID: 8078188614394960685, guid: a8f589a42de2a5e478cbb691a9e111f5, type: 3}
   img: {fileID: 412171628, guid: 998ad91201636404f8db57769c6c273f, type: 3}
@@ -66,15 +66,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9182412258599377891, guid: 0f4a84df8529b4659a631f94293ef35a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.25
+      value: 0.92
       objectReference: {fileID: 0}
     - target: {fileID: 9182412258599377891, guid: 0f4a84df8529b4659a631f94293ef35a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.25
+      value: 0.92
       objectReference: {fileID: 0}
     - target: {fileID: 9182412258599377891, guid: 0f4a84df8529b4659a631f94293ef35a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.25
+      value: 0.92
       objectReference: {fileID: 0}
     - target: {fileID: 9182412258599377891, guid: 0f4a84df8529b4659a631f94293ef35a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -116,7 +116,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9182412258599377891, guid: 0f4a84df8529b4659a631f94293ef35a, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6201172597502439264, guid: 0f4a84df8529b4659a631f94293ef35a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
